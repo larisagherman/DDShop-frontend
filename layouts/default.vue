@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen DefaultLayout bg-slate-100">
+  <div class="h-screen DefaultLayout ">
     <slot/>
   </div>
 </template>

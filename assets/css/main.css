@@ -5,3 +5,19 @@ body{
     padding: 20px;
     color:#101720;
 }
+
+@theme static{
+    --font-sans: 'Public Sans', sans-serif;
+
+    --color-pink-50:  #fff0f6;
+    --color-pink-100: #ffdeeb;
+    --color-pink-200: #fcc2d7;
+    --color-pink-300: #faa2c1;
+    --color-pink-400: #f783ac;
+    --color-pink-500: #f06595;
+    --color-pink-600: #e64980;
+    --color-pink-700: #d6336c;
+    --color-pink-800: #c2255c;
+    --color-pink-900: #a61e4d;
+    --color-pink-950: #6f1141;
+}
