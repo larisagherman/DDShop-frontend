@@ -7,7 +7,7 @@ import type {NavigationMenuItem} from '@nuxt/ui'
 import {useAuth} from "~/composables/useAuth";
 
 const route = useRoute()
-const hiddenNavbarRoutes = ['/register','/login']
+const hiddenNavbarRoutes = ['/register', '/login']
 const showNavbar = computed(() => !hiddenNavbarRoutes.includes(route.path))
 
 const handleLogout = async () => {
@@ -20,7 +20,7 @@ const handleLogout = async () => {
   }
 }
 
-const {logout, isAuthenticated,loading} = useAuth()
+const {logout, isAuthenticated, loading} = useAuth()
 const middleItems = [
   {
     label: 'Home',
@@ -28,7 +28,7 @@ const middleItems = [
   },
   {
     label: 'Products',
-    to: '/'
+    to: '/products'
   },
   {
     label: 'Contact',
@@ -58,18 +58,17 @@ const logIn = computed<NavigationMenuItem[]>(() => [
                 <UIcon name="i-lucide-user" class="text-gray-500"/>
               </NuxtLink>
               <NuxtLink to="/cart" class="p-2">
-                <UIcon name="i-lucide-shopping-cart"  class="text-gray-500"/>
+                <UIcon name="i-lucide-shopping-cart" class="text-gray-500"/>
               </NuxtLink>
             </div>
             <div v-if="isAuthenticated">
               <UButton @click="handleLogout">Logout</UButton>
             </div>
             <div v-else>
-              <UNavigationMenu class="space-x-0" :items="logIn" />
+              <UNavigationMenu class="space-x-0" :items="logIn"/>
             </div>
           </div>
         </div>
-
         <NuxtPage/>
       </NuxtLayout>
     </div>
