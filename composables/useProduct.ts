@@ -29,7 +29,7 @@ export const useProduct = () => {
         }
 
     }
-    const getProductAttributes = async (id: int) => {
+    const getProductAttributesById = async (id: int) => {
         try {
             console.log("Fetching attributes with id: " + id)
             const response = await $fetch(`http://localhost:8090/products/${id}`, {
@@ -42,11 +42,12 @@ export const useProduct = () => {
             throw error.data || 'Fetching attributes failed'
         }
     }
+
     return {
         products,
         getProducts,
         getProductById,
-        getProductAttributes,
+        getProductAttributesById,
         productAttributes,
         product
     }

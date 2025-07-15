@@ -17,6 +17,7 @@
     "jwt-decode": "^4.0.0",
     "nuxt": "^3.17.6",
     "nuxt-auth-utils": "^0.5.20",
+    "pinia": "^3.0.3",
     "postcss": "^8.5.6",
     "sass": "^1.89.2",
     "tailwindcss": "^4.1.11",
@@ -24,6 +25,7 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "@tailwindcss/line-clamp": "^0.4.4",
     "@vueuse/core": "^13.5.0",
     "@vueuse/nuxt": "^13.5.0"
   }

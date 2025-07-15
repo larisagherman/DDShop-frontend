@@ -24,7 +24,7 @@ const {logout, isAuthenticated, loading} = useAuth()
 const middleItems = [
   {
     label: 'Home',
-    to: '/'
+    to: '/home'
   },
   {
     label: 'Products',
@@ -46,33 +46,46 @@ const logIn = computed<NavigationMenuItem[]>(() => [
 <template>
   <UApp>
     <div>
+
+
       <NuxtLayout>
-        <div v-if="showNavbar" class="relative flex justify-between items-center px-2 py-2  text-black">
-          <UNavigationMenu :items="middleItems" class="absolute left-1/2 transform -translate-x-1/2"/>
-          <div v-if="!loading" class="ml-auto flex items-center space-x-0">
-            <div class="flex items-center space-x-0">
-              <NuxtLink to="/search" class="p-2">
-                <UIcon name="i-lucide-search" class="text-gray-500"/>
-              </NuxtLink>
-              <NuxtLink to="/user" class="p-2">
-                <UIcon name="i-lucide-user" class="text-gray-500"/>
-              </NuxtLink>
-              <NuxtLink to="/cart" class="p-2">
-                <UIcon name="i-lucide-shopping-cart" class="text-gray-500"/>
-              </NuxtLink>
-            </div>
+        <header class="flex items-center justify-between px-6 py-4 bg-white relative">
+          <!-- Logo on the left -->
+          <NuxtLink to="/home" class="flex-shrink-0" v-if="showNavbar">
+            <img src="/logo.png" alt="Logo" class="h-10 w-auto" />
+          </NuxtLink>
+
+          <!-- Middle navigation centered -->
+          <div v-if="showNavbar" class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <UNavigationMenu :items="middleItems" />
+          </div>
+
+          <!-- Right icons and buttons -->
+          <div v-if="showNavbar && !loading" class="ml-auto flex items-center space-x-2">
+            <NuxtLink to="/search" class="p-2">
+              <UIcon name="i-lucide-search" class="text-gray-500" />
+            </NuxtLink>
+            <NuxtLink to="/user" class="p-2">
+              <UIcon name="i-lucide-user" class="text-gray-500" />
+            </NuxtLink>
+            <NuxtLink to="/cart" class="p-2">
+              <UIcon name="i-lucide-shopping-cart" class="text-gray-500" />
+            </NuxtLink>
+
             <div v-if="isAuthenticated">
               <UButton @click="handleLogout">Logout</UButton>
             </div>
             <div v-else>
-              <UNavigationMenu class="space-x-0" :items="logIn"/>
+              <UNavigationMenu class="space-x-0" :items="logIn" />
             </div>
           </div>
-        </div>
+        </header>
+
         <NuxtPage/>
+        <Footer v-if="showNavbar"/>
+
       </NuxtLayout>
     </div>
-    <Footer/>
   </UApp>
 
 </template>

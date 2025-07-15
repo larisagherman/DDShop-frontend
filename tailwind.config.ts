@@ -1,6 +1,5 @@
 export default {
     theme: {
-
         extend: {
             colors: {
                 rosePink: '#DD99BB',
@@ -8,4 +7,6 @@ export default {
             },
         },
     },
+    plugins: [require('@tailwindcss/line-clamp')],
+
 }

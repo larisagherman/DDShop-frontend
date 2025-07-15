@@ -1,56 +1,36 @@
-<script setup>
-const products = [
-  {
-    id: 1,
-    name: 'Chocolate Donut',
-    price: 12,
-    image: '/donut.jpg',
-    availabilityQuantity: 4
-  },
-  {
-    id: 1,
-    name: 'Chocolate Donut',
-    price: 12,
-    image: '/donut.jpg',
-    availabilityQuantity: 4
-  },{
-    id: 1,
-    name: 'Chocolate Donut',
-    price: 12,
-    image: '/donut.jpg',
-    availabilityQuantity: 4
-  },
-  {
-    id: 1,
-    name: 'Chocolate Donut',
-    price: 12,
-    image: '/donut.jpg',
-    availabilityQuantity: 4
-  }
-]
+<script setup lang="ts">
+
 </script>
 
 <template>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
-    <UCard
-        v-for="product in products"
-        :key="product.id"
-        class="flex flex-col justify-between"
-    >
-      <img
-          :src="product.image"
-          alt="Product image"
-          class="rounded-md h-48 object-cover mb-2"
-      />
-      <h2 class="text-lg font-semibold">{{ product.name }}</h2>
-      <p class="text-gray-500">{{ product.price }} RON</p>
-      <UButton
-          class="mt-2"
-          :disabled="product.availabilityQuantity === 0"
-          @click="addToCart(product)"
-      >
-        Add to Cart
-      </UButton>
-    </UCard>
+  <div class="max-w-4xl mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Your Cart</h1>
+    <div  class="text-gray-600">Your cart is empty.</div>
+
+    <div >
+      <ul>
+        <li  class="flex justify-between items-center py-2 border-b">
+          <div>
+            <h2 class="font-semibold">ITEM NAME</h2>
+            <p>20 RON</p>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button  class="px-2 bg-gray-300 rounded">-</button>
+            <span>quantity</span>
+            <button  class="px-2 bg-gray-300 rounded">+</button>
+          </div>
+          <div> RON</div>
+        </li>
+      </ul>
+
+      <div class="mt-4 flex justify-between font-semibold text-lg">
+        <span>Total:</span>
+        <span> RON</span>
+      </div>
+
+      <div class="mt-6">
+        <UButton @click="clearCart" color="danger">Clear Cart</UButton>
+      </div>
+    </div>
   </div>
 </template>
