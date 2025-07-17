@@ -3,7 +3,7 @@ export const useRegister = () => {
 
     const register = async (formState: any) => {
         try {
-            await $fetch('http://localhost:8090/api/register', {
+            await $fetch('http://localhost:8099/api/register', {
                 method: 'POST',
                 body: formState,
                 headers: { 'Content-Type': 'application/json' }

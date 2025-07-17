@@ -5,7 +5,7 @@ export const useProduct = () => {
     const getProducts = async () => {
         try {
             console.log("Fetching products")
-            const response = await $fetch("http://localhost:8090/products", {
+            const response = await $fetch("http://localhost:8099/products", {
                 method: 'GET',
             })
             products.value = response
@@ -18,7 +18,7 @@ export const useProduct = () => {
     const getProductById = async (id: int) => {
         try {
             console.log("Fetching product with id: " + id)
-            const response = await $fetch(`http://localhost:8090/products/${id}`, {
+            const response = await $fetch(`http://localhost:8099/products/${id}`, {
                 method: 'GET',
             })
             product.value = response
@@ -32,7 +32,7 @@ export const useProduct = () => {
     const getProductAttributesById = async (id: int) => {
         try {
             console.log("Fetching attributes with id: " + id)
-            const response = await $fetch(`http://localhost:8090/products/${id}`, {
+            const response = await $fetch(`http://localhost:8099/products/${id}`, {
                 method:'GET',
             })
             productAttributes.value = response

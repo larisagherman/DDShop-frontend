@@ -6,15 +6,17 @@ export const useAuth = () => {
     const tokenKey = 'token'
     const userKey = 'user'
 
+    const user = useState('auth-user', () => null)
+    const token = useCookie(tokenKey)
+
     const isAuthenticated = computed(() => !!user.value)
-    const loading = ref(true)  // NEW: loading flag, true until user is checked
-    const userData = ref(null as any) // store user object locally
+    const loading = ref(true)
 
     // Load user data from localStorage on client mount
     onMounted(() => {
-        if (process.client) {
+        if (process.client&& !user.value) {
             const storedUser = localStorage.getItem(userKey)
-            userData.value = storedUser ? JSON.parse(storedUser) : null
+            user.value = storedUser ? JSON.parse(storedUser) : null
         }
         loading.value = false
     })
@@ -22,60 +24,44 @@ export const useAuth = () => {
     const login = async (email: string, password: string) => {
         try {
             console.log("Logging in user:")
-            const response = await $fetch<{ user: any, token: string }>('http://localhost:8090/api/login', {
+            const response = await $fetch<{ user: any, token: string }>('http://localhost:8099/api/login', {
                 method: 'POST',
                 body: {email, password},
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
-            const tokenCookie = useCookie(tokenKey)
-            tokenCookie.value = response.token
-
-            if (process.client) {
-                localStorage.setItem(userKey, JSON.stringify(response.user)) // store user info
-            }
-            console.log(response.user)
+            token.value=response.token
+            user.value=response.user
+            localStorage.setItem(userKey, JSON.stringify(response.user))
             await router.push('/home')
         } catch (err: any) {
             console.log('Login error:', err)
-
             throw err.data || 'Login failed.'
         }
     }
 
     const logout = () => {
         console.log('Logging out.')
-        if (process.client) {
-            localStorage.removeItem(userKey)       // clear user info
-            localStorage.removeItem(tokenKey)      // clear token from localStorage (if used anywhere)
-            const tokenCookie = useCookie(tokenKey)
-            tokenCookie.value = null                // clear token cookie
+        token.value=null
+        user.value=null
+        if(process.client){
+            localStorage.removeItem(userKey)
         }
         router.push('/login')
     }
 
 
-    const getToken = () => {
-        if (process.client) {
-            return localStorage.getItem(tokenKey)
-        }
-        return null
-    }
-    const user = computed(() => {
-        if (process.client) {
-            const data = localStorage.getItem(userKey)
-            return data ? JSON.parse(data) : null
-        }
-        return null
-    })
+    const getToken = () => token.value
+    const userId = computed(() => user.value?.id)
 
     return {
         login,
         logout,
         isAuthenticated,
         getToken,
-        user:userData,
+        user,
         loading,
+        userId,
     }
 }

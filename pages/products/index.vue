@@ -1,10 +1,33 @@
 <script setup lang="ts">
+import {useCartStore} from "~/stores/useCartStore";
 
 const {products, getProducts} = useProduct()
-
+const {cart,addToCart,getCartByUserId}=useCart()
+const {userId} = useAuth()
 onMounted(() => {
   getProducts()
 })
+
+watch(
+    () => userId.value,
+    (id) => {
+      if (id) {
+        console.log("Fetching cart for user:", id)
+        getCartByUserId(id)
+      }
+    },
+    { immediate: true }
+)
+
+function handleAddToCart(product) {
+  const quantity = 1
+  const pricePerPiece = product.price
+  const totalPricePerEntry = pricePerPiece * quantity
+
+  console.log('Adding to cart', product)
+  addToCart(product.id,product.name, quantity, pricePerPiece, totalPricePerEntry)
+
+}
 
 </script>
 <template>
@@ -19,9 +42,8 @@ onMounted(() => {
             <p class="text-gray-500 mb-4">{{ product.price }} RON</p>
           </div>
           <div class="mt-auto">
-            <UButton>Add to Cart</UButton>
+            <UButton @click.prevent="handleAddToCart(product)">Add to Cart</UButton>
           </div>
-
         </UCard>
       </NuxtLink>
     </div>
