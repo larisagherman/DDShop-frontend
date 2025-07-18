@@ -5,7 +5,6 @@ export const useCart = () => {
     const getCartByUserId = async (id: number) => {
         try {
             userId.value = id
-
             console.log("Getting cart for userId:", id)
             const response = await $fetch(`http://localhost:8099/carts/user/${id}`, {
                 method: 'GET',
@@ -13,6 +12,7 @@ export const useCart = () => {
             })
             cart.value = response
             console.log('Got cart.')
+            console.log('Active:',cart.value.active)
 
         } catch (error) {
             console.log("Error fetching cart: ", error.data)
@@ -27,7 +27,7 @@ export const useCart = () => {
                 method: 'PUT',
                 body: {totalPrice: newTotalPrice},
             })
-            console.log('Cart totalPrice updated successfully:', newTotalPrice)
+            console.log('Cart totalPrice updated successfully')
         } catch (error) {
             console.log('Error updating cart totalPrice:', error)
         }
@@ -78,9 +78,7 @@ export const useCart = () => {
                     credentials: 'include'
                 })
                 await getCartByUserId(cart.value.userId)
-
                 console.log('Added to cart')
-
             } catch (error) {
                 console.log('Error adding to cart.')
             }
@@ -92,11 +90,8 @@ export const useCart = () => {
             0
         )
         await updateCartTotalPrice(cart.value.id, newTotalPrice)
-        console.log(cart.value.totalPrice)
-
         await getCartByUserId(cart.value.userId)
         console.log('Cart total price updated.')
-
     }
     const updateCartEntryQuantity = async (entryId: number, newQuantity: number) => {
         const entry = cart.value.cartEntries.find(entry => entry.id === entryId)
@@ -123,11 +118,8 @@ export const useCart = () => {
             )
 
             await updateCartTotalPrice(cart.value.id, newTotalPrice)
-            console.log(cart.value.totalPrice)
-
             await getCartByUserId(cart.value.userId)
             console.log('Cart total price updated.')
-
         } catch (error) {
             console.error("Error updating entry quantity:", error)
         }

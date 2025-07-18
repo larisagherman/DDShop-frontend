@@ -5,7 +5,7 @@ import type {NavigationMenuItem} from '@nuxt/ui'
 import {useAuth} from "~/composables/useAuth";
 
 const route = useRoute()
-const hiddenNavbarRoutes = ['/register', '/login']
+const hiddenNavbarRoutes = ['/register', '/login','/checkout/details']
 const showNavbar = computed(() => !hiddenNavbarRoutes.includes(route.path))
 
 const handleLogout = async () => {

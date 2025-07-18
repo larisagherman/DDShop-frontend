@@ -9,7 +9,7 @@ export const useProduct = () => {
                 method: 'GET',
             })
             products.value = response
-            console.log('Products fetched: ')
+            console.log('Products fetched')
         } catch (error) {
             console.log("Error fetching products: ", error.data)
             throw error.data || 'Fetching products failed'
