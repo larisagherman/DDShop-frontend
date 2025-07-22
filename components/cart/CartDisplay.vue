@@ -9,7 +9,7 @@ function shopNow() {
   router.push('/products')
 }
 function checkout() {
-  router.push('/checkout/details')
+  router.push('/checkout/shipping')
 }
 
 </script>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import {useCartStore} from "~/stores/useCartStore";
 
 const {products, getProducts} = useProduct()
 const {cart,addToCart,getCartByUserId}=useCart()

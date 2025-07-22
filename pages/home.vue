@@ -1,8 +1,5 @@
 <script setup lang="ts">
-//
-//definePageMeta({
-//  // middleware: 'auth',
-//})
+
 const {user,isAuthenticated,loading} = useAuth()
 
 const firstName = computed(() => user.value?.firstName)

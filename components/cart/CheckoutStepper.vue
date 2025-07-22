@@ -1,6 +1,12 @@
-
+<!-- components/CheckoutStepper.vue -->
 <script setup lang="ts">
-import type { StepperItem } from '@nuxt/ui'
+
+
+import type {StepperItem} from '@nuxt/ui'
+import {useRoute, useRouter} from 'vue-router'
+
+const router = useRouter()
+const route = useRoute()
 
 const items: StepperItem[] = [
   {
@@ -23,36 +29,54 @@ const items: StepperItem[] = [
   }
 ]
 
-const stepper = useTemplateRef('stepper')
+const currentIndex = computed(() =>
+    items.findIndex(item => item.to === route.path)
+)
+
+const goToStep = (index: number) => {
+  const item = items[index]
+  if (item) router.push(item.to)
+}
+
+const hasPrev = computed(() => currentIndex.value > 0)
+const hasNext = computed(() => currentIndex.value < items.length - 1)
+
+function goBackToCart() {
+  router.push('/cart')
+}
 </script>
 
 <template>
-  <div class="w-full">
-    <UStepper ref="stepper" :items="items">
-      <template #content="{ item }">
-        <Placeholder class="aspect-video">
-          {{ item.description }}
-        </Placeholder>
-      </template>
-    </UStepper>
 
-    <div class="flex gap-2 justify-between mt-4">
+  <div class="w-full max-w-4xl mx-auto flex flex-col">
+    <div class="mb-4">
+      <UButton leading-icon="i-lucide-arrow-left" @click="goBackToCart" variant="ghost" color="grey">
+        Back to Cart
+      </UButton>
+    </div>
+    <div class="mb-8">
+      <UStepper :items="items" :model-value="currentIndex"/>
+    </div>
+    <div class="flex-grow">
+      <slot/>
+    </div>
+
+    <div class="flex gap-2 justify-between mt-6">
       <UButton
           leading-icon="i-lucide-arrow-left"
-          :disabled="!stepper?.hasPrev"
-          @click="stepper?.prev()"
+          :disabled="!hasPrev"
+          @click="goToStep(currentIndex - 1)"
       >
         Back
       </UButton>
 
       <UButton
           trailing-icon="i-lucide-arrow-right"
-          :disabled="!stepper?.hasNext"
-          @click="stepper?.next()"
+          :disabled="!hasNext"
+          @click="goToStep(currentIndex + 1)"
       >
         Next
       </UButton>
     </div>
   </div>
 </template>
-

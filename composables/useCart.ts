@@ -138,11 +138,60 @@ export const useCart = () => {
         }
 
     }
+    const checkout=async(orderForm)=>{
+        try{
+            await $fetch(`http://localhost:8099/orders`,{
+                method:'POST',
+                body:orderForm
+            })
+            console.log('Order created')
+        }catch(error){
+            console.error('Error order creation:', error)
+        }
+    }
+    const disableCart=async(cartId)=>{
+        try{
+            await $fetch(`http://localhost:8099/carts/disabled/${cartId}`, {
+                method:'PUT'
+            })
+            console.log('Order disabled')
+        }catch (error){
+            console.error('Error disable cart:', error)
+        }
+    }
+    const createCart=async(userId)=>{
+        try{
+            await $fetch(`http://localhost:8099/carts`, {
+                method:'POST',
+                body:{userId:userId,totalPrice:0}
+            })
+            console.log('New Cart created created')
+        }catch(error){
+            console.error('Error creating new cart:', error)
+        }
+    }
+    const disabledCarts=ref([])
+    const getAllDisabledCartsByUserId=async(userId)=>{
+        try{
+            const response=await $fetch(`http://localhost:8099/carts/disabled-carts/user/${userId}`, {
+                method:'GET'
+            })
+            disabledCarts.value=response
+            console.log('Got all disabled carts.')
+        }catch(error){
+            console.error('Error getting disabled carts.')
+        }
+    }
     return {
         cart,
         getCartByUserId,
         addToCart,
         updateCartEntryQuantity,
         deleteCartEntry,
+        checkout,
+        disableCart,
+        createCart,
+        getAllDisabledCartsByUserId,
+        disabledCarts,
     }
 }
