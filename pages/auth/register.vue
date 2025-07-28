@@ -254,7 +254,7 @@ watch(useSameAddress, (newVal) => {
       <p v-if="error" class="text-red-500 text-sm text-center">{{ error }}</p>
       <div class="text-sm inline-flex flex items-center justify-center">
         <p> Already have an account? </p>
-        <NuxtLink to="/login" class="underline font-bold ml-2">Log in</NuxtLink>
+        <NuxtLink to="/auth/login" class="underline font-bold ml-2">Log in</NuxtLink>
       </div>
     </UForm>
   </div>

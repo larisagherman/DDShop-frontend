@@ -48,12 +48,28 @@ export const useAuth = () => {
         if(process.client){
             localStorage.removeItem(userKey)
         }
-        router.push('/login')
+        router.push('/auth/login')
     }
 
 
     const getToken = () => token.value
     const userId = computed(() => user.value?.id)
+
+    const success = ref(false)
+    const error = ref('')
+    const sendResetLink = async (email:string) => {
+        try {
+            await $fetch('http://localhost:8099/api/forgot-password', {
+                method: 'POST',
+                body: { email }
+            })
+            success.value = true
+            error.value = ''
+        } catch (err: any) {
+            error.value = err.data?.message || 'Something went wrong'
+            success.value = false
+        }
+    }
 
     return {
         login,
@@ -63,5 +79,6 @@ export const useAuth = () => {
         user,
         loading,
         userId,
+        sendResetLink,
     }
 }

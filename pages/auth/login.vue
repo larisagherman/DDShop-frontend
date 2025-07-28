@@ -56,13 +56,13 @@ const doLogin = async () => {
         </UInput>
       </UFormField>
       <div class="flex items-center justify-center text-sm">
-        <NuxtLink class="underline font-bold"> Forgot password?</NuxtLink>
+        <NuxtLink to="/auth/forgot-password" class="underline font-bold" > Forgot password?</NuxtLink>
       </div>
       <UButton @click="doLogin" size="xl">LOG IN</UButton>
       <p v-if="error" class="text-red-500 text-sm text-center">{{ error }}</p>
       <div class="text-sm inline-flex flex items-center justify-center">
         <p> Don't have an account?</p>
-        <NuxtLink to="/register" class="underline font-bold ml-2">Sign up</NuxtLink>
+        <NuxtLink to="/auth/register" class="underline font-bold ml-2">Sign up</NuxtLink>
       </div>
 
 

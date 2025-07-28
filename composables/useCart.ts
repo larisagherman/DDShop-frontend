@@ -1,6 +1,6 @@
 export const useCart = () => {
-    let cart = ref([])
-    let userId = ref(null)  // store userId here
+    const cart = useState('cart', () => null)
+    const userId = useState('userId', () => null)
 
     const getCartByUserId = async (id: number) => {
         try {
@@ -12,7 +12,6 @@ export const useCart = () => {
             })
             cart.value = response
             console.log('Got cart.')
-            console.log('Active:',cart.value.active)
 
         } catch (error) {
             console.log("Error fetching cart: ", error.data)
@@ -27,7 +26,7 @@ export const useCart = () => {
                 method: 'PUT',
                 body: {totalPrice: newTotalPrice},
             })
-            console.log('Cart totalPrice updated successfully')
+            console.log('Cart TotalPrice updated successfully')
         } catch (error) {
             console.log('Error updating cart totalPrice:', error)
         }
@@ -56,8 +55,8 @@ export const useCart = () => {
                     body: updateEntry,
                     credentials: 'include'
                 })
+                await getCartByUserId(userId.value)
                 console.log('Cart-entry updated successfully.')
-
             } catch (error) {
                 console.log("Error updating cart-entry: ", error)
             }
@@ -77,20 +76,20 @@ export const useCart = () => {
                     body: newCartEntry,
                     credentials: 'include'
                 })
-                await getCartByUserId(cart.value.userId)
+                await getCartByUserId(userId.value)
                 console.log('Added to cart')
             } catch (error) {
                 console.log('Error adding to cart.')
             }
         }
-        await getCartByUserId(cart.value.userId)
+        await getCartByUserId(userId.value)
 
         const newTotalPrice = cart.value.cartEntries.reduce(
             (acc, entry) => acc + entry.totalPricePerEntry,
             0
         )
         await updateCartTotalPrice(cart.value.id, newTotalPrice)
-        await getCartByUserId(cart.value.userId)
+        await getCartByUserId(userId.value)
         console.log('Cart total price updated.')
     }
     const updateCartEntryQuantity = async (entryId: number, newQuantity: number) => {
@@ -110,7 +109,7 @@ export const useCart = () => {
                 }
             })
             console.log('Cart-entry updated successfully.')
-            await getCartByUserId(cart.value.userId)
+            await getCartByUserId(userId.value)
 
             const newTotalPrice = cart.value.cartEntries.reduce(
                 (acc, entry) => acc + entry.totalPricePerEntry,
@@ -118,7 +117,7 @@ export const useCart = () => {
             )
 
             await updateCartTotalPrice(cart.value.id, newTotalPrice)
-            await getCartByUserId(cart.value.userId)
+            await getCartByUserId(userId.value)
             console.log('Cart total price updated.')
         } catch (error) {
             console.error("Error updating entry quantity:", error)
@@ -182,6 +181,11 @@ export const useCart = () => {
             console.error('Error getting disabled carts.')
         }
     }
+    const totalItemsInCart = computed(() => {
+        if (!cart.value || !cart.value.cartEntries) return 0
+        return cart.value.cartEntries.reduce((sum, entry) => sum + entry.quantity, 0)
+    })
+
     return {
         cart,
         getCartByUserId,
@@ -193,5 +197,6 @@ export const useCart = () => {
         createCart,
         getAllDisabledCartsByUserId,
         disabledCarts,
+        totalItemsInCart,
     }
 }
