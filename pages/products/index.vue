@@ -48,14 +48,49 @@ function handleAddToCart(product) {
 //filtering
 const selectedCategory = ref('')
 const priceRange = ref([0,300])
-
+const selectedFlavours = ref<string[]>([])  // multi-select for flavours
+const selectedIngredients=ref<string[]>([])
 const filteredProducts = computed(() => {
   return products.value.filter(p => {
     const categoryMatch = selectedCategory.value === '' || p.categoryName === selectedCategory.value
+
     const priceMatch = p.price>=priceRange.value[0]&&p.price <= priceRange.value[1]
-    return categoryMatch && priceMatch
+
+    const flavourValues = p.productAttributes
+        ?.filter(attr => attr.name === 'flavour')
+        .map(attr => attr.value)
+    const flavourMatch =
+        selectedFlavours.value.length === 0 ||
+        selectedFlavours.value.some(flavour => flavourValues.includes(flavour))
+
+    const ingredientValues=p.productAttributes?.filter(attr => attr.name === 'ingredients').map(attr => attr.value)
+    const ingredientsMatch =selectedIngredients.value.length === 0 ||selectedIngredients.value.some(ingredient => ingredientValues.includes(ingredient))
+    return categoryMatch && priceMatch&&flavourMatch&&ingredientsMatch
   })
 })
+const flavourOptions = computed(() => {
+  const set = new Set()
+  products.value.forEach(p => {
+    p.productAttributes?.forEach(attr => {
+      if (attr.name === 'flavour') {
+        set.add(attr.value)
+      }
+    })
+  })
+  return Array.from(set)
+})
+const ingredientsOptions=computed(() => {
+  const set = new Set()
+  products.value.forEach(p => {
+    p.productAttributes?.forEach(attr => {
+      if (attr.name === 'ingredients') {
+        set.add(attr.value)
+      }
+    })
+  })
+  return Array.from(set)
+})
+
 
 </script>
 <template>
@@ -94,6 +129,38 @@ const filteredProducts = computed(() => {
             </div>
           </div>
         </div>
+        <!-- Flavour Filter -->
+        <div class="mb-6">
+          <label class="block mb-2 font-medium">Flavours:</label>
+          <div class="flex flex-col gap-1">
+            <label v-for="flavour in flavourOptions" :key="flavour" class="inline-flex items-center">
+              <input
+                  type="checkbox"
+                  :value="flavour"
+                  v-model="selectedFlavours"
+                  class="mr-2"
+              />
+              {{ flavour }}
+            </label>
+          </div>
+        </div>
+
+        <!-- Ingredient Filter -->
+        <div class="mb-6">
+          <label class="block mb-2 font-medium">Ingredients:</label>
+          <div class="flex flex-col gap-1">
+            <label v-for="ingredient in ingredientsOptions" :key="ingredient" class="inline-flex items-center">
+              <input
+                  type="checkbox"
+                  :value="ingredient"
+                  v-model="selectedIngredients"
+                  class="mr-2"
+              />
+              {{ ingredient }}
+            </label>
+          </div>
+        </div>
+
       </div>
     <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 flex-1">
       <NuxtLink v-for="product in filteredProducts" :key="product.id" :to="`/products/${product.id}`"
