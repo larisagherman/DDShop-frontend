@@ -1,16 +1,27 @@
 <script setup lang="ts">
 
-const {products, getProducts} = useProduct()
+const {products,getProductsByPage,totalPages,totalItems} = useProduct()
 const {cart, addToCart, getCartByUserId} = useCart()
 const {categories, getCategories} = useCategory()
 const {userId} = useAuth()
+
+
+const route = useRoute()
+const router = useRouter()
+
+const page = ref(Number(route.query.page)||1)
+
+watch(page, (newPage) => {
+  router.replace({ query: { ...route.query, page: newPage } })
+  getProductsByPage(newPage)
+})
+
 onMounted(async () => {
-  await getProducts()
+  await getProductsByPage(page.value)
   await getCategories()
   //to get the max price of the actual products
   const prices = products.value.map(p => p.price)
   const max = Math.max(...prices)
-
   priceRange.value[1] = max
 })
 
@@ -23,6 +34,7 @@ watch(
     },
     {immediate: true}
 )
+
 
 function handleAddToCart(product) {
   const quantity = 1
@@ -44,6 +56,7 @@ const filteredProducts = computed(() => {
     return categoryMatch && priceMatch
   })
 })
+
 </script>
 <template>
   <div class="flex gap-6 p-2">
@@ -100,4 +113,12 @@ const filteredProducts = computed(() => {
       </NuxtLink>
     </div>
   </div>
+  <div class="flex items-center justify-center">
+   <UPagination v-model:page="page"
+                :total="totalItems"
+                size="xs"
+                active-variant="subtle"
+                class="mt-6"/>
+  </div>
+
 </template>

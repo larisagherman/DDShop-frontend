@@ -34,7 +34,7 @@ export const useAuth = () => {
             token.value=response.token
             user.value=response.user
             localStorage.setItem(userKey, JSON.stringify(response.user))
-            await router.push('/home')
+            await router.push('/')
         } catch (err: any) {
             console.log('Login error:', err)
             throw err.data || 'Login failed.'

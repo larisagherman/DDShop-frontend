@@ -22,8 +22,8 @@ function checkout() {
 
     <!-- ✅ When cart is empty -->
     <div v-else-if="cart.cartEntries?.length === 0" class="flex flex-col items-center justify-center text-center mt-20">
-      <h1 class="text-2xl font-semibold mb-4">Your cart is currently empty</h1>
-      <UButton @click="shopNow" class="mt-2">Continue Shopping</UButton>
+      <h1 class="text-2xl font-semibold mb-4">Your cart is currently empty.</h1>
+      <UButton @click="shopNow" class="text-center text-md text-md font-bold mt-2 p-4">Continue Shopping</UButton>
     </div>
 
     <!-- ✅ When cart has entries -->

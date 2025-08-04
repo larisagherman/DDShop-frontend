@@ -2,6 +2,8 @@ export const useProduct = () => {
     const products = ref([])
     const product = ref()
     const productAttributes = ref([]);
+    const totalPages=ref(1)
+    const totalItems=ref(0)
     const getProducts = async () => {
         try {
             console.log("Fetching products")
@@ -13,6 +15,20 @@ export const useProduct = () => {
         } catch (error) {
             console.log("Error fetching products: ", error.data)
             throw error.data || 'Fetching products failed'
+        }
+    }
+    const getProductsByPage=async(page:number=1)=>{
+        try{
+            const pageIndex=page-1
+            const response = await $fetch(`http://localhost:8099/products?page=${pageIndex}&size=12`, {
+              method:'GET'
+            })
+            products.value = response.content
+            totalPages.value = response.totalPages
+            totalItems.value=response.totalElements
+            console.log(totalItems.value)
+        }catch(error){
+            console.log("Error fetching products: ", error)
         }
     }
     const getProductById = async (id: int) => {
@@ -49,6 +65,8 @@ export const useProduct = () => {
         getProductById,
         getProductAttributesById,
         productAttributes,
-        product
+        product,
+        getProductsByPage,
+        totalPages,totalItems,
     }
 }

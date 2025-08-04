@@ -22,7 +22,7 @@ const {logout, isAuthenticated, loading} = useAuth()
 const middleItems = [
   {
     label: 'Home',
-    to: '/home'
+    to: '/'
   },
   {
     label: 'Products',
@@ -69,11 +69,11 @@ const {totalItemsInCart} = useCart()
 
 </script>
 <template>
-  <nav class="navbar bg-white  py-6 px-8">
+  <nav class="navbar  py-6 px-8">
     <header v-if="showNavbar" class="flex items-center justify-between w-full relative">
 
       <!-- Logo -->
-      <NuxtLink to="/home" class="flex-shrink-0">
+      <NuxtLink to="/" class="flex-shrink-0">
         <img src="/logo.png" alt="Logo" class="h-15 w-auto"/>
       </NuxtLink>
 

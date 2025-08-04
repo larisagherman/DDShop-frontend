@@ -5,7 +5,7 @@ import "@nuxt/ui";
 
 export default defineNuxtConfig({
     compatibilityDate: '2025-05-15',
-    devtools: {enabled: true},
+    devtools: {enabled: false},
     alias: {
         '@': resolve(__dirname, '/'),
     },
@@ -13,5 +13,8 @@ export default defineNuxtConfig({
         "~/assets/css/main.css",
     ],
     modules: ['@nuxt/ui', '@vueuse/nuxt', 'nuxt-auth-utils','@pinia/nuxt',  '@pinia/nuxt'],
+    ui: {
+        colorMode: false
+    }
 
 })

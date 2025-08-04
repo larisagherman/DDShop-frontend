@@ -1,12 +1,18 @@
-<script setup>
-const {sayHello}=useUtiles();
-sayHello();
+<script setup lang="ts">
 
-const isDark = useDark()
+const {user,isAuthenticated,loading} = useAuth()
 
-useTitle(() => isDark.value ? '🌙 Fancy a evening dessert?' : '☀️ Fancy a morning sweet treat?!');
+const firstName = computed(() => user.value?.firstName)
+// console.log('home user id',userId)
 </script>
+
 <template>
-<Alert/>
-  <div> Main page</div>
+  <div class="flex flex-col justify-center items-center">
+    <div v-if="isAuthenticated &&!loading">
+      <h1 class="text-center">Welcome {{ firstName}}! Fancy a sweet treat?</h1>
+    </div>
+    <div v-else>
+      <h1>Not logged in</h1>
+    </div>
+  </div>
 </template>
