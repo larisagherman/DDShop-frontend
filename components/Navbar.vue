@@ -1,12 +1,13 @@
 <script setup lang="ts">
 
-import {useRoute} from 'vue-router'
 import type {NavigationMenuItem} from '@nuxt/ui'
 import {useAuth} from "~/composables/useAuth";
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const hiddenNavbarRoutes = ['/auth/register','/auth/reset-password', '/auth/login','/auth/forgot-password', '/checkout/shipping', '/checkout/billing', '/checkout/confirmation']
 const showNavbar = computed(() => !hiddenNavbarRoutes.includes(route.path))
+const router = useRouter()
 
 const handleLogout = async () => {
   try {
@@ -57,9 +58,10 @@ const items = ref<DropdownMenuItem[]>([
   }
 ])
 
-function handleItemClick(item: DropdownMenuItem) {
+async function handleItemClick(item: DropdownMenuItem) {
   if (item.label === 'Logout') {
-    logout()
+    await logout()
+    await navigateTo('/auth/login')
   } else if (item.to) {
     router.push(item.to)
   }
