@@ -15,6 +15,9 @@ export default defineNuxtConfig({
     modules: ['@nuxt/ui', '@vueuse/nuxt', 'nuxt-auth-utils','@pinia/nuxt',  '@pinia/nuxt'],
     ui: {
         colorMode: false
-    }
+    },
+    nitro: {
+        preset: 'node-server'
+    },
 
 })

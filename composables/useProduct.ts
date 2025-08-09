@@ -17,10 +17,28 @@ export const useProduct = () => {
             throw error.data || 'Fetching products failed'
         }
     }
-    const getProductsByPage=async(page:number=1)=>{
+    const getProductsByPage=async(page:number=1,filters?:{category?:string;ingredients?:string[];flavours?:string[];sortField:string;sortDir:string})=>{
         try{
             const pageIndex=page-1
-            const response = await $fetch(`http://localhost:8099/products?page=${pageIndex}&size=12`, {
+            const params:Record<string, any> = {
+                page:pageIndex,
+                size:12
+            };
+            if(filters?.category!=null)params.category=filters.category
+            if(filters?.ingredients && filters?.ingredients.length>0){
+                params.ingredients=filters.ingredients.join(',')
+            }
+            if(filters?.flavours && filters?.flavours.length>0){
+                params.flavours=filters.flavours.join(',')
+            }
+            if(filters?.sortField) params.sortField=filters.sortField
+            if(filters?.sortDir) params.sortDir=filters.sortDir
+
+            console.log('Params object:', params)
+
+            const queryString = new URLSearchParams(params).toString();
+
+            const response = await $fetch(`http://localhost:8099/products?${queryString}`, {
               method:'GET'
             })
             products.value = response.content
@@ -58,6 +76,20 @@ export const useProduct = () => {
             throw error.data || 'Fetching attributes failed'
         }
     }
+    const allOfTheProductAttributes = ref([])
+    const getAllProductAttributes = async () => {
+        try{
+            console.log("Fetching all attributes")
+            const response = await $fetch(`http://localhost:8099/product-attribute`, {
+                method:'GET'
+            })
+            allOfTheProductAttributes.value = response
+
+        }catch(error) {
+            console.log("Error fetching all attributes failed: ", error.data)
+        }
+    }
+
 
     return {
         products,
@@ -68,5 +100,7 @@ export const useProduct = () => {
         product,
         getProductsByPage,
         totalPages,totalItems,
+        getAllProductAttributes,
+        allOfTheProductAttributes,
     }
 }
