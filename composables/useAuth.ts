@@ -2,7 +2,9 @@ import {useCookie} from '#app'
 
 
 export const useAuth = () => {
+    const config = useRuntimeConfig()
     const BASE_URL = config.public.apiBase
+
     const router = useRouter()
     const tokenKey = 'token'
     const userKey = 'user'
