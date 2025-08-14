@@ -1,4 +1,7 @@
 export const useCart = () => {
+    const config = useRuntimeConfig()
+    const BASE_URL = config.public.apiBase
+
     const cart = useState('cart', () => null)
     const userId = useState('userId', () => null)
 
@@ -6,7 +9,7 @@ export const useCart = () => {
         try {
             userId.value = id
             console.log("Getting cart for userId:", id)
-            const response = await $fetch(`http://localhost:8099/carts/user/${id}`, {
+            const response = await $fetch(`${BASE_URL}/carts/user/${id}`, {
                 method: 'GET',
                 credentials: 'include',
             })
@@ -22,7 +25,7 @@ export const useCart = () => {
     const updateCartTotalPrice = async (cartId: number, newTotalPrice: number) => {
         try {
             console.log('cart id', cart.value.id)
-            await $fetch(`http://localhost:8099/carts/${cartId}`, {
+            await $fetch(`${BASE_URL}/${cartId}`, {
                 method: 'PUT',
                 body: {totalPrice: newTotalPrice},
             })
@@ -50,7 +53,7 @@ export const useCart = () => {
                 totalPricePerEntry: updatedQuantity * pricePerPiece,
             }
             try {
-                await $fetch(`http://localhost:8099/cart-entries/${existingCartEntry.id}`, {
+                await $fetch(`${BASE_URL}/${existingCartEntry.id}`, {
                     method: 'PUT',
                     body: updateEntry,
                     credentials: 'include'
@@ -71,7 +74,7 @@ export const useCart = () => {
 
             }
             try {
-                const response = await $fetch(`http://localhost:8099/cart-entries`, {
+                const response = await $fetch(`${BASE_URL}/cart-entries`, {
                     method: 'POST',
                     body: newCartEntry,
                     credentials: 'include'
@@ -100,7 +103,7 @@ export const useCart = () => {
         }
         const updateTotalPricePerEntry = newQuantity * entry.pricePerPiece
         try {
-            await $fetch(`http://localhost:8099/cart-entries/${entry.id}`, {
+            await $fetch(`${BASE_URL}/${entry.id}`, {
                 method: 'PUT',
                 credentials: 'include',
                 body: {
@@ -125,7 +128,7 @@ export const useCart = () => {
     }
     const deleteCartEntry = async (entryId) => {
         try {
-            await $fetch(`http://localhost:8099/cart-entries/${entryId}`, {
+            await $fetch(`${BASE_URL}/${entryId}`, {
                 method: 'DELETE',
                 credentials: 'include'
             })
@@ -139,7 +142,7 @@ export const useCart = () => {
     }
     const checkout=async(orderForm)=>{
         try{
-            await $fetch(`http://localhost:8099/orders`,{
+            await $fetch(`${BASE_URL}/orders`,{
                 method:'POST',
                 body:orderForm
             })
@@ -150,7 +153,7 @@ export const useCart = () => {
     }
     const disableCart=async(cartId)=>{
         try{
-            await $fetch(`http://localhost:8099/carts/disabled/${cartId}`, {
+            await $fetch(`${BASE_URL}/carts/disabled/${cartId}`, {
                 method:'PUT'
             })
             console.log('Order disabled')
@@ -160,7 +163,7 @@ export const useCart = () => {
     }
     const createCart=async(userId)=>{
         try{
-            await $fetch(`http://localhost:8099/carts`, {
+            await $fetch(`${BASE_URL}/carts`, {
                 method:'POST',
                 body:{userId:userId,totalPrice:0}
             })
@@ -172,7 +175,7 @@ export const useCart = () => {
     const disabledCarts=ref([])
     const getAllDisabledCartsByUserId=async(userId)=>{
         try{
-            const response=await $fetch(`http://localhost:8099/carts/disabled-carts/user/${userId}`, {
+            const response=await $fetch(`${BASE_URL}/carts/disabled-carts/user/${userId}`, {
                 method:'GET'
             })
             disabledCarts.value=response

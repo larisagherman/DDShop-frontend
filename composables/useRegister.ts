@@ -1,9 +1,13 @@
 export const useRegister = () => {
+
+    const config = useRuntimeConfig()
+    const BASE_URL = config.public.apiBase
+
     const router = useRouter()
 
     const register = async (formState: any) => {
         try {
-            await $fetch('http://localhost:8099/api/register', {
+            await $fetch(`${BASE_URL}/api/register`, {
                 method: 'POST',
                 body: formState,
                 headers: { 'Content-Type': 'application/json' }

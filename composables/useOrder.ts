@@ -1,8 +1,11 @@
 export const userOrder=()=>{
+    const config = useRuntimeConfig()
+    const BASE_URL = config.public.apiBase
+
     const orders=ref([])
     const getOrdersByUserId=async(userId)=>{
         try{
-            const response=await $fetch(`http://localhost:8099/orders/user/${userId}`,{
+            const response=await $fetch(`${BASE_URL}/orders/user/${userId}`,{
                 method:'GET'
             })
             orders.value=response

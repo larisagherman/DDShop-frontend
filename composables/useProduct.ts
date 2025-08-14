@@ -1,4 +1,7 @@
 export const useProduct = () => {
+    const config = useRuntimeConfig()
+    const BASE_URL = config.public.apiBase
+
     const products = ref([])
     const product = ref()
     const productAttributes = ref([]);
@@ -7,7 +10,7 @@ export const useProduct = () => {
     const getProducts = async () => {
         try {
             console.log("Fetching products")
-            const response = await $fetch("http://localhost:8099/products", {
+            const response = await $fetch(`${BASE_URL}/products`, {
                 method: 'GET',
             })
             products.value = response
@@ -38,7 +41,7 @@ export const useProduct = () => {
 
             const queryString = new URLSearchParams(params).toString();
 
-            const response = await $fetch(`http://localhost:8099/products?${queryString}`, {
+            const response = await $fetch(`${BASE_URL}/products?${queryString}`, {
               method:'GET'
             })
             products.value = response.content
@@ -52,7 +55,7 @@ export const useProduct = () => {
     const getProductById = async (id: int) => {
         try {
             console.log("Fetching product with id: " + id)
-            const response = await $fetch(`http://localhost:8099/products/${id}`, {
+            const response = await $fetch(`${BASE_URL}/products/${id}`, {
                 method: 'GET',
             })
             product.value = response
@@ -66,7 +69,7 @@ export const useProduct = () => {
     const getProductAttributesById = async (id: int) => {
         try {
             console.log("Fetching attributes with id: " + id)
-            const response = await $fetch(`http://localhost:8099/products/${id}`, {
+            const response = await $fetch(`${BASE_URL}/products/${id}`, {
                 method:'GET',
             })
             productAttributes.value = response
@@ -80,7 +83,7 @@ export const useProduct = () => {
     const getAllProductAttributes = async () => {
         try{
             console.log("Fetching all attributes")
-            const response = await $fetch(`http://localhost:8099/product-attribute`, {
+            const response = await $fetch(`${BASE_URL}/product-attribute`, {
                 method:'GET'
             })
             allOfTheProductAttributes.value = response
