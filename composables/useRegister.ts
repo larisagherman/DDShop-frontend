@@ -14,7 +14,7 @@ export const useRegister = () => {
             })
 
             console.log('Registration successful!')
-            await router.push('/login')
+            await router.push('/auth/login')
         } catch (err: any) {
             console.log('Sign up error:', err.data)
 
