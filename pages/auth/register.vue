@@ -258,7 +258,7 @@ watch(useSameAddress, (newVal) => {
             </UFormField>
           </div>
         </div>
-        <UButton type="submit" size="xl" class="text-center text-lg font-bold">SIGN UP</UButton>
+        <UButton type="submit" size="xl" class="text-center text-lg font-bold cursor-pointer">SIGN UP</UButton>
         <p v-if="error" class="text-red-500 text-sm text-center">{{ error }}</p>
         <div class="text-sm inline-flex flex items-center justify-center">
           <p> Already have an account? </p>

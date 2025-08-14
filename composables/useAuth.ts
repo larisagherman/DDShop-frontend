@@ -2,6 +2,7 @@ import {useCookie} from '#app'
 
 
 export const useAuth = () => {
+    const BASE_URL = config.public.apiBase
     const router = useRouter()
     const tokenKey = 'token'
     const userKey = 'user'
@@ -24,7 +25,7 @@ export const useAuth = () => {
     const login = async (email: string, password: string) => {
         try {
             console.log("Logging in user:")
-            const response = await $fetch<{ user: any, token: string }>('http://localhost:8099/api/login', {
+            const response = await $fetch<{ user: any, token: string }>(`${BASE_URL}/api/login`, {
                 method: 'POST',
                 body: {email, password},
                 headers: {
@@ -59,7 +60,7 @@ export const useAuth = () => {
     const error = ref('')
     const sendResetLink = async (email:string) => {
         try {
-            await $fetch('http://localhost:8099/api/forgot-password', {
+            await $fetch(`${BASE_URL}/api/forgot-password`, {
                 method: 'POST',
                 body: { email }
             })
