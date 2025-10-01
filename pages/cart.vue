@@ -25,7 +25,7 @@ async function decreaseQuantity(entry) {
 
 </script>
 <template>
-  <div class="max-w-4xl mx-auto p-4">
+  <div class="max-w-4xl mx-auto p-4 ">
     <CartDisplay :cart="cart" @increaseQuantity="increaseQuantity" @decreaseQuantity="decreaseQuantity"/>
   </div>
 </template>

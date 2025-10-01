@@ -16,9 +16,6 @@ export default defineNuxtConfig({
     ui: {
         colorMode: false
     },
-    nitro: {
-        preset: 'node-server'
-    },
     server: {
         host: process.env.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost',
         port: process.env.PORT || 10000
@@ -28,7 +25,7 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         public: {
-            apiBase: process.env.API_BASE_URL || 'https://ddshop-backend.onrender.com'
+            apiBase: process.env.API_BASE_URL || 'http://localhost:8080' //|| 'https://ddshop-backend.onrender.com'
         }
     },
 

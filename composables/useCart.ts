@@ -14,7 +14,7 @@ export const useCart = () => {
                 credentials: 'include',
             })
             cart.value = response
-            console.log('Got cart.')
+            console.log('Got cart with id:',response.id)
 
         } catch (error) {
             console.log("Error fetching cart: ", error.data)
@@ -25,7 +25,7 @@ export const useCart = () => {
     const updateCartTotalPrice = async (cartId: number, newTotalPrice: number) => {
         try {
             console.log('cart id', cart.value.id)
-            await $fetch(`${BASE_URL}/${cartId}`, {
+            await $fetch(`${BASE_URL}/carts/${cartId}`, {
                 method: 'PUT',
                 body: {totalPrice: newTotalPrice},
             })
@@ -53,7 +53,7 @@ export const useCart = () => {
                 totalPricePerEntry: updatedQuantity * pricePerPiece,
             }
             try {
-                await $fetch(`${BASE_URL}/${existingCartEntry.id}`, {
+                await $fetch(`${BASE_URL}/cart-entries/${existingCartEntry.id}`, {
                     method: 'PUT',
                     body: updateEntry,
                     credentials: 'include'
@@ -92,7 +92,7 @@ export const useCart = () => {
             0
         )
         await updateCartTotalPrice(cart.value.id, newTotalPrice)
-        await getCartByUserId(userId.value)
+        // await getCartByUserId(userId.value)
         console.log('Cart total price updated.')
     }
     const updateCartEntryQuantity = async (entryId: number, newQuantity: number) => {
@@ -103,7 +103,7 @@ export const useCart = () => {
         }
         const updateTotalPricePerEntry = newQuantity * entry.pricePerPiece
         try {
-            await $fetch(`${BASE_URL}/${entry.id}`, {
+            await $fetch(`${BASE_URL}/cart-entries/${entry.id}`, {
                 method: 'PUT',
                 credentials: 'include',
                 body: {
@@ -128,7 +128,7 @@ export const useCart = () => {
     }
     const deleteCartEntry = async (entryId) => {
         try {
-            await $fetch(`${BASE_URL}/${entryId}`, {
+            await $fetch(`${BASE_URL}/cart-entries/${entryId}`, {
                 method: 'DELETE',
                 credentials: 'include'
             })

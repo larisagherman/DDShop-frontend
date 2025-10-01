@@ -47,9 +47,9 @@ function checkout() {
             <p class="text-sm text-gray-500">{{ entry.pricePerPiece }} RON</p>
           </div>
           <div class="flex items-center space-x-2">
-            <button @click="$emit('decreaseQuantity', entry)" class="px-2 bg-pink-100 rounded">-</button>
+            <button @click="$emit('decreaseQuantity', entry)" class="px-2 bg-pink-100 rounded cursor-pointer">-</button>
             <span>{{ entry.quantity }}</span>
-            <button @click="$emit('increaseQuantity', entry)" class="px-2 bg-pink-100 rounded">+</button>
+            <button @click="$emit('increaseQuantity', entry)" class="px-2 bg-pink-100 rounded cursor-pointer">+</button>
           </div>
           <div class="text-right w-24">{{ entry.totalPricePerEntry }} RON</div>
         </li>

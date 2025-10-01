@@ -17,7 +17,7 @@ function goBack() {
 const breadcrumbs = ref<BreadcrumbItem[]>([
   {
     label: 'Home',
-    to: '/index'
+    to: '/'
   },
   {
     label: 'Products',
