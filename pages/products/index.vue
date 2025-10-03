@@ -220,8 +220,8 @@ function toggleSortDirection(){
         <UButton @click="clearFilters">Clear Filters</UButton>
 
       </div>
-    <div v-if="loading" class="flex justify-center items-center h-96">
-      <div class="loader border-4 border-t-4 border-gray-200 rounded-full w-12 h-12 animate-spin"></div>
+    <div v-if="loading" class="fixed flex inset-0 justify-center items-center h-screen">
+      <p class="text-2xl font-semibold animate-pulse">Loading...</p>
     </div>
 
     <div v v-else class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 flex-1">
