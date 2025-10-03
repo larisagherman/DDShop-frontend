@@ -11,6 +11,7 @@ const router = useRouter()
 
 const page = ref(Number(route.query.page)||1)
 
+const loading=ref(true)
 
 //filtering
 const selectedCategory = ref(route.query.category as string ||'')
@@ -58,7 +59,8 @@ const filters=computed(()=>({
 }))
 
 
-watch([page, filters], ([newPage, newFilters]) => {
+watch([page, filters], async ([newPage, newFilters]) => {
+  loading.value = true
   router.replace({
     query: {
       page:newPage,
@@ -69,12 +71,14 @@ watch([page, filters], ([newPage, newFilters]) => {
       sortDir: sortDir.value,
     }
   })
-  getProductsByPage(newPage, newFilters);
+  await getProductsByPage(newPage, newFilters);
+  loading.value = false
 }, { immediate: true });
 
 watch(
     () => route.query,
-    (newQuery) => {
+    async (newQuery) => {
+      loading.value = true
       page.value = Number(newQuery.page) || 1;
       selectedCategory.value = (newQuery.category as string) || '';
       selectedIngredients.value = newQuery.ingredients
@@ -87,13 +91,14 @@ watch(
       sortDir.value = (newQuery.sortDir as string) || 'asc';
 
       // Fetch products with updated filters
-      getProductsByPage(page.value, {
+      await getProductsByPage(page.value, {
         category: selectedCategory.value,
         ingredients: selectedIngredients.value,
         flavours: selectedFlavours.value,
         sortField: sortField.value,
         sortDir: sortDir.value,
       });
+      loading.value = false
     },
     {immediate: true}
 );
@@ -215,7 +220,11 @@ function toggleSortDirection(){
         <UButton @click="clearFilters">Clear Filters</UButton>
 
       </div>
-    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 flex-1">
+    <div v-if="loading" class="flex justify-center items-center h-96">
+      <div class="loader border-4 border-t-4 border-gray-200 rounded-full w-12 h-12 animate-spin"></div>
+    </div>
+
+    <div v v-else class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 flex-1">
       <NuxtLink v-for="product in products" :key="product.id" :to="`/products/${product.id}`"
                 class="block  h-full">
         <UCard class="max-w-sm w-full hover:shadow-md transition-shadow flex flex-col justify-between h-full min-h-[28rem]">
