@@ -28,7 +28,7 @@ function sendMessage() {
 
   <!-- 📬 Contact Card -->
   <div
-      class="max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-8 -mt-20 flex flex-col md:flex-row gap-8 relative z-10">
+      class="max-w-5xl  mx-auto  bg-white shadow-2xl rounded-2xl p-8 -mt-20 flex flex-col md:flex-row gap-8 relative z-10 min-h-[500px]">
     <!-- Left: Contact Info -->
     <div class="md:w-1/2 space-y-5 p-8">
       <div class="text-center text-left ">
@@ -59,6 +59,24 @@ function sendMessage() {
           </div>
         </div>
       </div>
+      <USeparator />
+      <div class="text-left mt-2 ml-2">
+        <p class="text-left mb-2 font-semibold">Follow Our Social Media:</p>
+        <div class="flex  items-center justify-start gap-2 ">
+          <NuxtLink to="https://instagram.com" >
+            <UAvatar icon="i-lucide-instagram" size="xl" class="text-2xl"/>
+          </NuxtLink>
+          <NuxtLink to="https://facebook.com">
+            <UAvatar icon="i-lucide-facebook" size="xl" class="text-2xl"/>
+          </NuxtLink>
+          <NuxtLink to="https://twitter.com">
+            <UAvatar icon="i-lucide-twitter" size="xl" class="text-2xl"/>
+          </NuxtLink>
+          <NuxtLink to="https://youtube.com">
+            <UAvatar icon="i-lucide-youtube" size="xl" class="text-2xl"/>
+          </NuxtLink>
+        </div>
+      </div>
     </div>
 
     <!-- Right: Message Form -->
@@ -72,45 +90,29 @@ function sendMessage() {
       <UForm class="space-y-2">
         <!-- 👤 Name fields side by side -->
         <div class="flex gap-2">
-          <UFormField class="flex-1">
-            <UInput placeholder="First Name" class="w-full rounded-lg py-1"/>
+          <UFormField class="flex-1 rounded-full">
+            <UInput placeholder="First Name" class="w-full  py-2":ui="{ base: 'rounded-2xl' }"/>
           </UFormField>
           <UFormField class="flex-1">
-            <UInput placeholder="Last Name" class="w-full rounded-lg py-1"/>
+            <UInput placeholder="Last Name" class="w-full rounded-lg py-2":ui="{ base: 'rounded-2xl' }"/>
           </UFormField>
         </div>
 
         <!-- 📧 Email -->
         <UFormField>
-          <UInput placeholder="Email" class="w-full rounded-lg py-1" required/>
+          <UInput placeholder="Email" class="w-full  py-2" required :ui="{ base: 'rounded-2xl' }"/>
         </UFormField>
 
         <!-- 💬 Message -->
         <UFormField>
-          <UTextarea placeholder="Your Message" required autoresize class="w-full py-1"/>
+          <UTextarea placeholder="Your Message" required autoresize class="w-full py-2" rows="5" :ui="{ base: 'rounded-2xl' }"/>
         </UFormField>
       </UForm>
 
       <!-- 📤 CTA Button -->
-      <UButton type="submit" size="xl" class="hover:bg-pink-600 w-full py-1 text-md">Send Message</UButton>
+      <UButton type="submit" size="xl" class="hover:bg-pink-600 w-full py-1 text-md mt-8">Send Message</UButton>
     </div>
   </div>
-  <div class="mt-8">
-    <p class="text-center mb-2 font-semibold">Follow Our Social Media:</p>
-    <div class="flex  items-center justify-center gap-2 ">
-      <NuxtLink to="https://instagram.com" >
-        <UAvatar icon="i-lucide-instagram" size="xl" class="text-2xl"/>
-      </NuxtLink>
-      <NuxtLink to="https://facebook.com">
-        <UAvatar icon="i-lucide-facebook" size="xl" class="text-2xl"/>
-      </NuxtLink>
-      <NuxtLink to="https://twitter.com">
-        <UAvatar icon="i-lucide-twitter" size="xl" class="text-2xl"/>
-      </NuxtLink>
-      <NuxtLink to="https://youtube.com">
-        <UAvatar icon="i-lucide-youtube" size="xl" class="text-2xl"/>
-      </NuxtLink>
-    </div>
-  </div>
+
 </template>
 
