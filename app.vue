@@ -3,7 +3,7 @@ import Navbar from "~/components/Navbar.vue";
 import {useRoute} from "vue-router";
 
 const route = useRoute()
-const hiddenNavbarRoutes = ['/register', '/login','/checkout/details']
+const hiddenNavbarRoutes = ['/auth/register', '/auth/login','/checkout/details']
 const showNavbar = computed(() => !hiddenNavbarRoutes.includes(route.path))
 
 </script>

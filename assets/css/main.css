@@ -2,10 +2,12 @@
 @import "@nuxt/ui";
 
 body{
-    padding: 20px;
+    /*padding: 20px;*/
     color:#101720;
     background: #FCFCED;
+
 }
+
 /*h1{*/
 /*    @apply text-2xl font-bold text-center mb-4;*/
 /*}*/
@@ -24,3 +26,4 @@ body{
     --color-pink-900: #a61e4d;
     --color-pink-950: #6f1141;
 }
+

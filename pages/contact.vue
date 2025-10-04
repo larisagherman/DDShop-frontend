@@ -1,25 +1,25 @@
 <script setup lang="ts">
-const {sendMessage}=useMessage()
-const formState=reactive({
+const {sendMessage} = useMessage()
+const formState = reactive({
   firstName: '',
   lastName: '',
   email: '',
   subject: '',
   message: '',
 })
-const defaultFormState= {
+const defaultFormState = {
   firstName: '',
   lastName: '',
   email: '',
   subject: '',
   message: '',
 }
-const submitFormState = async()=>{
-  try{
+const submitFormState = async () => {
+  try {
     await sendMessage(formState)
-    Object.assign(formState,defaultFormState)
-  }catch(error){
-    error.value=error
+    Object.assign(formState, defaultFormState)
+  } catch (error) {
+    error.value = error
   }
 }
 </script>
@@ -27,14 +27,14 @@ const submitFormState = async()=>{
   <div class="relative w-full sm:mb-4">
     <!-- 🌄 Banner Image -->
     <img
-        src="/img/landscapeCakes.jpg"
+        src="public/img/landscapeCakes.jpg"
         alt="Desserts"
         class="w-full h-full object-cover"
     />
     <!-- ✨ Overlay Title -->
     <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white bg-black/30">
       <h1 class="text-5xl md:text-6xl font-bold drop-shadow-lg">Contact Us</h1>
-      <p class="mt-4 text-lg md:text-xl  drop-shadow-md">
+      <p class="mt-4 text-lg md:text-xl  drop-shadow-md mb-10">
         We're always here to sweeten your day — with the perfect dessert and a delicious solution to any craving.
       </p>
     </div>
@@ -73,11 +73,11 @@ const submitFormState = async()=>{
           </div>
         </div>
       </div>
-      <USeparator />
+      <USeparator/>
       <div class="text-left mt-2 ml-2">
         <p class="text-left mb-2 font-semibold">Follow Our Social Media:</p>
         <div class="flex  items-center justify-start gap-2 ">
-          <NuxtLink to="https://instagram.com" >
+          <NuxtLink to="https://instagram.com">
             <UAvatar icon="i-lucide-instagram" size="xl" class="text-2xl"/>
           </NuxtLink>
           <NuxtLink to="https://facebook.com">
@@ -105,29 +105,37 @@ const submitFormState = async()=>{
         <!-- 👤 Name fields side by side -->
         <div class="flex gap-2">
           <UFormField class="flex-1 rounded-full">
-            <UInput v-model="formState.firstName" placeholder="First Name" class="w-full  py-2":ui="{ base: 'rounded-2xl' }"/>
+            <UInput v-model="formState.firstName" placeholder="First Name" class="w-full  py-2"
+                    :ui="{ base: 'rounded-2xl' }"/>
           </UFormField>
           <UFormField class="flex-1">
-            <UInput v-model="formState.lastName" placeholder="Last Name" class="w-full rounded-lg py-2":ui="{ base: 'rounded-2xl' }"/>
+            <UInput v-model="formState.lastName" placeholder="Last Name" class="w-full rounded-lg py-2"
+                    :ui="{ base: 'rounded-2xl' }"/>
           </UFormField>
         </div>
         <!-- 📧 Email -->
         <UFormField>
-          <UInput v-model="formState.email" placeholder="Email" class="w-full  py-2" required :ui="{ base: 'rounded-2xl' }"/>
+          <UInput v-model="formState.email" placeholder="Email" class="w-full  py-2" required
+                  :ui="{ base: 'rounded-2xl' }"/>
         </UFormField>
         <!-- 💬 Subject -->
         <UFormField>
-          <UInput v-model="formState.subject" placeholder="Subject" class="w-full  py-2" required :ui="{ base: 'rounded-2xl' }"/>
+          <UInput v-model="formState.subject" placeholder="Subject" class="w-full  py-2" required
+                  :ui="{ base: 'rounded-2xl' }"/>
         </UFormField>
         <!-- 💬 Message -->
         <UFormField>
-          <UTextarea v-model="formState.message" placeholder="Your Message" required autoresize class="w-full py-2" :rows="5" :ui="{ base: 'rounded-2xl' }"/>
+          <UTextarea v-model="formState.message" placeholder="Your Message" required autoresize class="w-full py-2"
+                     :rows="5" :ui="{ base: 'rounded-2xl' }"/>
         </UFormField>
         <!-- 📤 CTA Button -->
-        <UButton type="submit"size="xl" class="hover:bg-pink-600 w-full py-1 text-md mt-8">Send Message</UButton>
+        <UButton type="submit" size="xl" class="hover:bg-pink-600 w-full py-1 text-md mt-8">Send Message</UButton>
 
       </UForm>
-          </div>
+    </div>
+  </div>
+  <div class="flex justify-center items-center gap-4 bg-pink-50">
+    <img src="public/img/map.png" alt="Map" class="p-4 w-full object-cover" />
   </div>
 
 </template>

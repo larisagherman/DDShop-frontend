@@ -22,7 +22,7 @@ const leftItems = [
   { label: 'Cakes', to: '/products?category=cakes' },
 ]
 const rightItems = [
-  { label: 'About', to: '/' },
+  { label: 'About', to: '/about' },
   { label: 'Contact', to: '/contact' }
 ]
 
