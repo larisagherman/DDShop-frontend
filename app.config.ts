@@ -7,7 +7,7 @@ export default defineAppConfig({
             defaultVariant:{
                 color: 'primary',
             },
-            base: ' font-bold rounded-full  justify-center text-base cursor-pointer hover:bg-pink-600',
+            base: ' font-bold rounded-full  justify-center text-base cursor-pointer ',
             color: {
                 primary: 'bg-pink-500 text-white hover:bg-pink-600'
             },

@@ -7,6 +7,7 @@ export default {
                 rosePinkHover: '#cc88aa'
             },
         },
+
     },
     plugins: [require('@tailwindcss/line-clamp')],
 

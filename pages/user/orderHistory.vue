@@ -13,7 +13,7 @@ onMounted(() => {
 })
 </script>
 <template>
-  <div class="max-w-4xl mx-auto p-6">
+  <div class="max-w-4xl mx-auto p-6 ">
     <h1 class="text-2xl font-bold mb-6">Order History</h1>
 
     <div v-if="disabledCarts.length === 0">

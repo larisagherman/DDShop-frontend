@@ -75,7 +75,7 @@ const submitFormState = async () => {
       </div>
       <USeparator/>
       <div class="text-left mt-2 ml-2">
-        <p class="text-left mb-2 font-semibold">Follow Our Social Media:</p>
+        <p class="text-left mb-4 font-semibold">Follow Our Social Media:</p>
         <div class="flex  items-center justify-start gap-2 ">
           <NuxtLink to="https://instagram.com">
             <UAvatar icon="i-lucide-instagram" size="xl" class="text-2xl"/>

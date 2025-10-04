@@ -1,6 +1,6 @@
 
 <template>
-  <footer class="bg-pink-50 w-full p-2">
+  <footer class="bg-pink-50 w-full p-2 ">
     <div class="flex justify-center items-center w-full px-10 py-6  ">
         <div class="flex items-center gap-4 ">
           <NuxtLink to="https://instagram.com">

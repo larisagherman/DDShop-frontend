@@ -38,7 +38,7 @@ const items = ref<DropdownMenuItem[]>([
 
 const handleItemClick = async (item: DropdownMenuItem) => {
   if (item.label === 'Logout') await handleLogout()
-  else if (item.to) router.push(item.to)
+  else if (item.to) await router.push(item.to)
 }
 
 // Mobile menu state

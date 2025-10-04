@@ -144,14 +144,15 @@ function toggleSortDirection(){
 }
 </script>
 <template>
-  <div class="mt-4 mb-4 flex items-center gap-2">
-    <p>Sort:</p>
-    <button @click="toggleSortDirection" class="cursor-pointer underline">
-       {{ sortDir === 'asc' ? 'Ascending' : 'Descending' }}
-    </button>
-  </div>
+  <div class="m-10">
+    <div class="mt-4 mb-4 flex items-center gap-2">
+      <p>Sort:</p>
+      <button @click="toggleSortDirection" class="cursor-pointer underline">
+        {{ sortDir === 'asc' ? 'Ascending' : 'Descending' }}
+      </button>
+    </div>
 
-  <div class="flex gap-6 p-2">
+    <div class="flex gap-6 p-2">
       <!-- Sidebar Filters -->
       <div class="w-full sm:w-64 flex-shrink-0">
         <!-- Category Filter -->
@@ -220,32 +221,34 @@ function toggleSortDirection(){
         <UButton @click="clearFilters">Clear Filters</UButton>
 
       </div>
-    <div v-if="loading" class="fixed flex inset-0 justify-center items-center h-screen">
-      <p class="text-2xl font-semibold animate-pulse">Loading...</p>
+      <div v-if="loading" class="fixed flex inset-0 justify-center items-center h-screen">
+        <p class="text-2xl font-semibold animate-pulse">Loading...</p>
+      </div>
+
+      <div v v-else class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 flex-1">
+        <NuxtLink v-for="product in products" :key="product.id" :to="`/products/${product.id}`"
+                  class="block  h-full">
+          <UCard class="max-w-sm w-full hover:shadow-md transition-shadow flex flex-col justify-between h-full min-h-[28rem]">
+            <div class="flex flex-col flex-grow">
+              <img :src="product.imageUrls?.[0]?.imageUrl" alt="Product Image"
+                   class="rounded-md w-full h-64 object-cover mb-2"/>
+              <h1 class="text-xl font-semibold mb-1 line-clamp-2 min-h-[3.5rem] capitalize">{{ product.name }}</h1>
+              <p class="lowercase line-clamp-4">{{ product.description }}</p>
+              <p class="text-gray-500 mb-4 line line-clamp-1 mt-2">{{ product.price }} RON</p>
+            </div>
+            <div class="mt-auto">
+              <UButton @click.prevent="handleAddToCart(product)" class="cursor-pointer">Add to Cart</UButton>
+            </div>
+          </UCard>
+        </NuxtLink>
+
+      </div>
+
     </div>
-
-    <div v v-else class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 flex-1">
-      <NuxtLink v-for="product in products" :key="product.id" :to="`/products/${product.id}`"
-                class="block  h-full">
-        <UCard class="max-w-sm w-full hover:shadow-md transition-shadow flex flex-col justify-between h-full min-h-[28rem]">
-          <div class="flex flex-col flex-grow">
-            <img :src="product.imageUrls?.[0]?.imageUrl" alt="Product Image"
-                 class="rounded-md w-full h-64 object-cover mb-2"/>
-            <h1 class="text-xl font-semibold mb-1 line-clamp-2 min-h-[3.5rem] capitalize">{{ product.name }}</h1>
-            <p class="lowercase line-clamp-4">{{ product.description }}</p>
-            <p class="text-gray-500 mb-4 line line-clamp-1 mt-2">{{ product.price }} RON</p>
-          </div>
-          <div class="mt-auto">
-            <UButton @click.prevent="handleAddToCart(product)" class="cursor-pointer">Add to Cart</UButton>
-          </div>
-        </UCard>
-      </NuxtLink>
-
-    </div>
-
   </div>
 
-  <div class="flex items-center justify-center">
+
+  <div class="flex items-center justify-center mb-2">
    <UPagination v-model:page="page"
                 :total="totalItems"
                 size="xs"

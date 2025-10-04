@@ -14,14 +14,18 @@ onMounted(async() => {
 </script>
 
 <template>
-  <div v-if="userInfo" class="p-4">
-    <div class="flex flex-col space-y-4 max-w-md mx-auto bg-white shadow-md rounded-lg p-6">
+  <div v-if="userInfo" class="h-screen flex justify-center items-center-safe">
+    <div class="flex flex-col space-y-4 max-w-md mx-auto bg-white shadow-md rounded-lg p-20 rounded-lg ">
       <!-- Basic Info -->
-      <div>
-        <h2 class="text-xl font-semibold">{{ userInfo.firstName }} {{ userInfo.lastName }}</h2>
-        <p class="text-gray-600">{{ userInfo.email }}</p>
-        <p class="text-gray-600">{{ userInfo.phoneNumber }}</p>
+      <div class="flex gap-8 w-full">
+        <div>
+          <h2 class="text-xl font-semibold">{{ userInfo.firstName }} {{ userInfo.lastName }}</h2>
+          <p class="text-gray-600">{{ userInfo.email }}</p>
+          <p class="text-gray-600">{{ userInfo.phoneNumber }}</p>
+        </div>
+        <UAvatar icon="i-lucide-image" size="3xl"/>
       </div>
+
       <div class="grid grid-cols-2 gap-8">
         <div v-if="userInfo.deliveryAddress">
           <h4 class="font-semibold mb-1">Delivery Address</h4>
