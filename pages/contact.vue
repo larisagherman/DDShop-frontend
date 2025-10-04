@@ -1,12 +1,26 @@
 <script setup lang="ts">
-import {ref} from 'vue'
-
-const form = ref({name: '', email: '', message: ''})
-
-function sendMessage() {
-  console.log('Message sent:', form.value)
-  alert('Thank you! Your message has been sent.')
-  form.value = {name: '', email: '', message: ''}
+const {sendMessage}=useMessage()
+const formState=reactive({
+  firstName: '',
+  lastName: '',
+  email: '',
+  subject: '',
+  message: '',
+})
+const defaultFormState= {
+  firstName: '',
+  lastName: '',
+  email: '',
+  subject: '',
+  message: '',
+}
+const submitFormState = async()=>{
+  try{
+    await sendMessage(formState)
+    Object.assign(formState,defaultFormState)
+  }catch(error){
+    error.value=error
+  }
 }
 </script>
 <template>
@@ -87,31 +101,33 @@ function sendMessage() {
       </h2>
 
       <!-- ✉️ Form -->
-      <UForm class="space-y-2">
+      <UForm :state="formState" @submit.prevent="submitFormState" class="space-y-2">
         <!-- 👤 Name fields side by side -->
         <div class="flex gap-2">
           <UFormField class="flex-1 rounded-full">
-            <UInput placeholder="First Name" class="w-full  py-2":ui="{ base: 'rounded-2xl' }"/>
+            <UInput v-model="formState.firstName" placeholder="First Name" class="w-full  py-2":ui="{ base: 'rounded-2xl' }"/>
           </UFormField>
           <UFormField class="flex-1">
-            <UInput placeholder="Last Name" class="w-full rounded-lg py-2":ui="{ base: 'rounded-2xl' }"/>
+            <UInput v-model="formState.lastName" placeholder="Last Name" class="w-full rounded-lg py-2":ui="{ base: 'rounded-2xl' }"/>
           </UFormField>
         </div>
-
         <!-- 📧 Email -->
         <UFormField>
-          <UInput placeholder="Email" class="w-full  py-2" required :ui="{ base: 'rounded-2xl' }"/>
+          <UInput v-model="formState.email" placeholder="Email" class="w-full  py-2" required :ui="{ base: 'rounded-2xl' }"/>
         </UFormField>
-
+        <!-- 💬 Subject -->
+        <UFormField>
+          <UInput v-model="formState.subject" placeholder="Subject" class="w-full  py-2" required :ui="{ base: 'rounded-2xl' }"/>
+        </UFormField>
         <!-- 💬 Message -->
         <UFormField>
-          <UTextarea placeholder="Your Message" required autoresize class="w-full py-2" rows="5" :ui="{ base: 'rounded-2xl' }"/>
+          <UTextarea v-model="formState.message" placeholder="Your Message" required autoresize class="w-full py-2" :rows="5" :ui="{ base: 'rounded-2xl' }"/>
         </UFormField>
-      </UForm>
+        <!-- 📤 CTA Button -->
+        <UButton type="submit"size="xl" class="hover:bg-pink-600 w-full py-1 text-md mt-8">Send Message</UButton>
 
-      <!-- 📤 CTA Button -->
-      <UButton type="submit" size="xl" class="hover:bg-pink-600 w-full py-1 text-md mt-8">Send Message</UButton>
-    </div>
+      </UForm>
+          </div>
   </div>
 
 </template>
