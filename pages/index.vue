@@ -18,11 +18,11 @@ const items = [
 
 <template>
   <div class="bg-pink-50 md:h-[900px]  h-[600px] ">
-    <div class="flex justify-center">
+    <div class="flex justify-center relative">
       <img src="public/img/cake.PNG" alt="cake" class="w-[350px] h-[400px] md:w-[600px] md:h-[700px] mt-30  ">
       <div class="absolute inset-0 flex flex-col items-center justify-center gap-8 ">
           <div v-if="isAuthenticated &&!loading">
-            <h1 class="text-center text-3xl md:text-5xl font-bold text-white drop-shadow-md md:mt-90">Welcome {{ firstName}}! <br>Fancy a sweet treat?</h1>
+            <h1 class="text-center text-3xl md:text-5xl font-bold text-white drop-shadow-md md:mt-60 ">Welcome {{ firstName}}! <br>Fancy a sweet treat?</h1>
           </div>
           <div v-else>
             <h1 class="text-center  font-bold text-5xl text-white drop-shadow-lg">Fancy a sweet treat?</h1>
