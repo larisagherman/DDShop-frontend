@@ -73,18 +73,18 @@ const mobileMenuOpen = ref(false)
 
         <!-- Icons -->
         <NuxtLink to="/" class="p-1">
-          <UIcon name="i-lucide-search" class="text-gray-500 w-6 h-6" absoluteStrokeWidth="2" />
+          <UIcon name="i-lucide-search" class="text-pink-600 w-6 h-6" absoluteStrokeWidth="0.5"  />
         </NuxtLink>
 
         <NuxtLink to="/cart" class="relative p-1">
           <UChip :text="totalItemsInCart" size="3xl">
-            <UIcon name="i-lucide-shopping-cart" class="text-gray-500 w-6 h-6" absoluteStrokeWidth="1" />
+            <UIcon name="i-lucide-shopping-cart" class="text-pink-600 w-6 h-6" absoluteStrokeWidth="0.5" />
           </UChip>
         </NuxtLink>
 
         <div v-if="isAuthenticated" class="ml-1 hidden md:block">
           <UDropdownMenu :items="items" :ui="{ item: { base: 'cursor-pointer' } }">
-            <UButton icon="i-lucide-user" color="gray-500" class="w-6 h-6 text-gray-500 cursor-pointer" variant="ghost" size="xl" />
+            <UButton icon="i-lucide-user" color="gray-500" class="w-6 h-6 text-pink-600 cursor-pointer " absoluteStrokeWidth="0.5" variant="ghost" size="xl" />
             <template #item="{ item }">
               <div
                   class="flex items-center px-3 py-2 space-x-2 hover:bg-gray-100 cursor-pointer"
@@ -108,7 +108,6 @@ const mobileMenuOpen = ref(false)
       </div>
     </header>
 
-    <!-- Mobile dropdown menu -->
     <!-- Mobile dropdown menu -->
     <transition name="fade">
       <div

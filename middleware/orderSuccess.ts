@@ -4,7 +4,7 @@ export default defineNuxtRouteMiddleware(() => {
 
         if (successFlag !== 'true') {
             // ⛔️ If the flag isn't set, block access
-            return navigateTo('/cart') // Or any fallback route you prefer
+            return navigateTo('/cart')
         }
 
         // ✅ Clear the flag after it's used

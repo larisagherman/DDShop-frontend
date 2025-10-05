@@ -1,11 +1,7 @@
-<script setup lang="ts">
-definePageMeta({
-  // middleware:
-})
+<script setup>
+import { UserRound } from 'lucide-vue-next';
 </script>
 
 <template>
-  <UForm size="xl" class="w-full h-full">
-    <UInput class=""></UInput>
-  </UForm>
+  <UserRound class="  stroke-2 stroke-amber-600" />
 </template>
