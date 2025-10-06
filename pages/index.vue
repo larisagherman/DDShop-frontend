@@ -1,19 +1,15 @@
 <script setup lang="ts">
 
-import router from "#app/plugins/router";
-
 const {user,isAuthenticated,loading} = useAuth()
-
+const {getAllProductsFirstImages}=useImage()
 const firstName = computed(() => user.value?.firstName)
 // console.log('home user id',userId)
-const items = [
-  'https://picsum.photos/640/640?random=1',
-  'https://picsum.photos/640/640?random=2',
-  'https://picsum.photos/640/640?random=3',
-  'https://picsum.photos/640/640?random=4',
-  'https://picsum.photos/640/640?random=5',
-  'https://picsum.photos/640/640?random=6'
-]
+const loading2=ref(true)
+const items=ref<string[]>([])
+onMounted(async() => {
+  items.value = await getAllProductsFirstImages()
+  loading2.value = false
+})
 </script>
 
 <template>
@@ -35,9 +31,15 @@ const items = [
   </div>
   <div class="flex flex-col justify-center items-center mt-20 gap-20">
     <h2 class="text-3xl drop-shadow-md font-medium ">Discover Our Latest Goodies</h2>
-    <UCarousel v-slot="{ item }" arrows :items="items" class="w-full max-w-xs mx-auto mb-20">
-      <img :src="item" width="400" height="400" class="rounded-lg">
-    </UCarousel>
+    <div v-if="loading2" class="rounded-lg">
+        <UCarousel arrows class=" w-full max-w-xs mx-auto mb-20 animate-pulse w-[400px] h-[400px] bg-pink-50 "></UCarousel>
+    </div>
+    <div v-else>
+      <UCarousel v-slot="{item}" v-if="items.length" arrows :items="items" class="w-full max-w-xs mx-auto mb-20">
+        <img :src="item"  class="rounded-lg w-[400px] h-[400px]" >
+      </UCarousel>
+    </div>
+
   </div>
   <div class="bg-pink-50 flex flex-col justify-center items-center gap-2 ">
     <h3 class="text-4xl mt-20 font-serif">100% natural</h3>
