@@ -2,10 +2,13 @@
 const route = useRoute()
 
 const {product, getProductById} = useProduct()
+const loading=ref(true)
 
-onMounted(() => {
+onMounted(async() => {
   const id = Number(route.params.id)
-  getProductById(id)
+  loading.value=true
+  await getProductById(id)
+  loading.value=false
 })
 
 const router = useRouter()
@@ -83,106 +86,149 @@ const quantity = ref(1)
 
 </script>
 
-<template>
-  <div class="p-4 mb-10 ">
-    <UBreadcrumb  :items="breadcrumbs" />
-  </div>
+<template >
+  <div class="h-screen">
+    <div class="p-4 mb-10 ">
+      <UBreadcrumb  :items="breadcrumbs" />
+    </div>
+    <div class="max-w-6xl mx-auto">
+      <!-- Loading skeleton -->
+      <div v-if="loading" class="animate-pulse">
+        <div class="flex justify-start items-start gap-20">
 
-  <div v-if="product" class="max-w-6xl mx-auto">
-    <div class="flex justify-start  items-start gap-20">
-
-      <!-- Left side: carousel + vertical thumbnails -->
-      <div class="flex gap-4 max-w-lg">
-        <div class="flex flex-col gap-4">
-          <div
-              v-for="(img, index) in product.imageUrls"
-              :key="index"
-              class="w-20 h-20 rounded-lg overflow-hidden cursor-pointer transition-opacity"
-              :class="activeIndex === index ? 'opacity-100 ring-2 ring-primary scale-105' : 'opacity-50 hover:opacity-100'"
-              @click="select(index)"
-          >
-            <img
-                :src="`${img.imageUrl}?q_auto,f_auto`"
-                alt="Thumbnail"
-                class="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-
-        <UCarousel
-            ref="carousel"
-            v-slot="{ item }"
-            :items="product.imageUrls.map(img => img.imageUrl)"
-            class="flex-grow rounded-lg"
-            arrows
-            :prev="{ onClick: onClickPrev }"
-            :next="{ onClick: onClickNext }"
-            @select="onSelect(index)"
-        >
-          <img
-              :src="`${item}?q_auto,f_auto`"
-              alt="Product Image"
-              class="rounded-lg object-contain w-full h-96"
-          />
-        </UCarousel>
-      </div>
-
-      <!-- Right side: text details -->
-      <div class="flex flex-col h-full max-h-[450px]"> <!-- container height for demo -->
-        <!-- Title at the top -->
-        <div class="mb-4">
-          <h1 class="text-6xl font-semibold capitalize">{{ product.name }}</h1>
-        </div>
-
-        <!-- Description fills available space -->
-        <div class="flex-grow overflow-auto mb-4">
-          <h3 class="mb-4 text-2xl lowercase">{{ product.description }}</h3>
-
-          <ul v-if="Object.keys(groupedAttributes).length" class="text-md text-gray-600">
-            <li v-for="(values, name) in groupedAttributes" :key="name" class="mb-1">
-              <strong class="capitalize">{{ name }}</strong>: {{ values.join(', ') }}
-            </li>
-          </ul>
-        </div>
-
-        <!-- Price, quantity selector, and button at bottom -->
-        <div class="mt-auto">
-          <p class="text-gray-500 mb-2 text-lg font-semibold">{{ product.price }} RON</p>
-
-          <!-- Quantity selector -->
-          <div class="flex items-center gap-4">
-            <div class="flex items-center space-x-2">
-              <button
-                  @click="quantity = Math.max(quantity - 1, 1)"
-                  class="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200"
-                  aria-label="Decrease quantity"
-              >
-                -
-              </button>
-              <input
-                  type="number"
-                  v-model.number="quantity"
-                  min="1"
-                  class="w-10 text-center border rounded"
-              />
-              <button
-                  @click="quantity++"
-                  class="px-2 py-1 bg-gray-100 rounded hover:bg-gray-200"
-                  aria-label="Increase quantity"
-              >
-                +
-              </button>
+          <!-- Left side: carousel + vertical thumbnails skeleton -->
+          <div class="flex gap-4 max-w-lg ">
+            <div class="flex flex-col gap-4">
+              <div v-for="i in 4" :key="i" class="w-20 h-20 bg-gray-300 rounded-lg"></div>
             </div>
 
-            <UButton @click="handleAddToCart(product)" class="w-full cursor-pointer text-2xl">
-              Add to Cart
-            </UButton>
+            <div class="flex-grow bg-gray-300 rounded-lg h-[400px] w-[400px]"></div>
           </div>
 
+          <!-- Right side: text details skeleton -->
+          <div class="flex flex-col h-full max-h-[450px] w-full gap-4">
+            <!-- Title skeleton -->
+            <div class="h-10 bg-gray-300 w-3/4 rounded"></div>
+
+            <!-- Description skeleton -->
+            <div class="flex-grow flex flex-col gap-2">
+              <div class="h-6 bg-gray-300 w-full rounded"></div>
+              <div class="h-6 bg-gray-300 w-5/6 rounded"></div>
+              <div class="h-6 bg-gray-300 w-2/3 rounded"></div>
+            </div>
+
+            <!-- Price and buttons skeleton -->
+            <div class="mt-auto flex flex-col gap-2">
+              <div class="h-6 bg-gray-300 w-1/4 rounded"></div>
+              <div class="flex gap-4 items-center">
+                <div class="h-10 w-10 bg-gray-300 rounded"></div>
+                <div class="h-10 flex-grow bg-gray-300 rounded"></div>
+              </div>
+            </div>
+          </div>
 
         </div>
       </div>
+      <div v-else v-if="product" class="">
+        <div class="flex justify-start  items-start gap-20">
 
+          <!-- Left side: carousel + vertical thumbnails -->
+          <div class="flex gap-4 max-w-lg">
+            <div class="flex flex-col gap-4">
+              <div
+                  v-for="(img, index) in product.imageUrls"
+                  :key="index"
+                  class="w-20 h-20 rounded-lg overflow-hidden cursor-pointer transition-opacity"
+                  :class="activeIndex === index ? 'opacity-100 ring-2 ring-primary scale-105' : 'opacity-50 hover:opacity-100'"
+                  @click="select(index)"
+              >
+                <img
+                    :src="`${img.imageUrl}?q_auto,f_auto`"
+                    alt="Thumbnail"
+                    class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
+            <UCarousel
+                ref="carousel"
+                v-slot="{ item }"
+                :items="product.imageUrls.map(img => img.imageUrl)"
+                class="flex-grow rounded-lg"
+                arrows
+                :prev="{ onClick: onClickPrev }"
+                :next="{ onClick: onClickNext }"
+                @select="onSelect(index)"
+            >
+              <img
+                  :src="`${item}?q_auto,f_auto`"
+                  alt="Product Image"
+                  class="rounded-lg object-contain w-full h-96"
+              />
+            </UCarousel>
+          </div>
+
+          <!-- Right side: text details -->
+          <div class="flex flex-col h-full max-h-[450px]"> <!-- container height for demo -->
+            <!-- Title at the top -->
+            <div class="mb-4">
+              <h1 class="text-6xl font-semibold capitalize">{{ product.name }}</h1>
+            </div>
+
+            <!-- Description fills available space -->
+            <div class="flex-grow overflow-auto mb-4">
+              <h3 class="mb-4 text-2xl lowercase">{{ product.description }}</h3>
+
+              <ul v-if="Object.keys(groupedAttributes).length" class="text-md text-gray-600">
+                <li v-for="(values, name) in groupedAttributes" :key="name" class="mb-1">
+                  <strong class="capitalize">{{ name }}</strong>: {{ values.join(', ') }}
+                </li>
+              </ul>
+            </div>
+
+            <!-- Price, quantity selector, and button at bottom -->
+            <div class="mt-auto">
+              <p class="text-gray-500 mb-2 text-lg font-semibold">{{ product.price }} RON</p>
+
+              <!-- Quantity selector -->
+              <div class="flex items-center gap-4">
+                <div class="flex items-center space-x-2">
+                  <button
+                      @click="quantity = Math.max(quantity - 1, 1)"
+                      class="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200"
+                      aria-label="Decrease quantity"
+                  >
+                    -
+                  </button>
+                  <input
+                      type="number"
+                      v-model.number="quantity"
+                      min="1"
+                      class="w-10 text-center border rounded"
+                  />
+                  <button
+                      @click="quantity++"
+                      class="px-2 py-1 bg-gray-100 rounded hover:bg-gray-200"
+                      aria-label="Increase quantity"
+                  >
+                    +
+                  </button>
+                </div>
+
+                <UButton @click="handleAddToCart(product)" class="w-full cursor-pointer text-2xl">
+                  Add to Cart
+                </UButton>
+              </div>
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
+
   </div>
+
+
 </template>
