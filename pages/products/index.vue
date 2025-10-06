@@ -233,11 +233,11 @@ function toggleSortDirection(){
               <img :src="product.imageUrls?.[0]?.imageUrl" alt="Product Image"
                    class="rounded-md w-full h-64 object-cover mb-2"/>
               <h1 class="text-xl font-semibold mb-1 line-clamp-2 min-h-[3.5rem] capitalize">{{ product.name }}</h1>
-              <p class="lowercase line-clamp-4">{{ product.description }}</p>
+              <p class="lowercase line-clamp-4 min-h-[5.25rem]">{{ product.description }}</p>
               <p class="text-gray-500 mb-4 line line-clamp-1 mt-2">{{ product.price }} RON</p>
             </div>
-            <div class="mt-auto">
-              <UButton @click.prevent="handleAddToCart(product)" class="cursor-pointer">Add to Cart</UButton>
+            <div class="mt-auto flex justify-end">
+              <UButton @click.prevent="handleAddToCart(product)" class="cursor-pointer ">Add to Cart</UButton>
             </div>
           </UCard>
         </NuxtLink>
