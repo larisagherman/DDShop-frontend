@@ -25,7 +25,9 @@ const rightItems = [
   { label: 'About', to: '/about' },
   { label: 'Contact', to: '/contact' }
 ]
-
+const adminItems=[
+  {label: 'Admin',to: '/admin'},
+]
 const logIn = computed<NavigationMenuItem[]>(() => [
   { label: 'Login', icon: 'i-lucide-log-in', to: '/auth/login' }
 ])
@@ -68,9 +70,12 @@ const mobileMenuOpen = ref(false)
       <!-- RIGHT ITEMS & ICONS -->
       <div class="flex items-center space-x-6 ml-auto">
         <div class="hidden md:flex">
-          <UNavigationMenu :items="rightItems" />
+          <UNavigationMenu :items="adminItems" />
         </div>
 
+        <div class="hidden md:flex">
+          <UNavigationMenu :items="rightItems" />
+        </div>
         <!-- Icons -->
         <NuxtLink to="/" class="p-1">
           <UIcon name="i-lucide-search" class="text-pink-600 w-6 h-6" absoluteStrokeWidth="0.5"  />

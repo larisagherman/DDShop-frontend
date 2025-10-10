@@ -43,7 +43,7 @@ export const useAuth = () => {
             throw err.data || 'Login failed.'
         }
     }
-
+    const isAdmin=computed(() => user.value?.isAdmin==true)
     const logout = () => {
         console.log('Logging out.')
         token.value=null
@@ -76,6 +76,7 @@ export const useAuth = () => {
 
     return {
         login,
+        isAdmin,
         logout,
         isAuthenticated,
         getToken,

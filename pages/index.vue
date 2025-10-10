@@ -1,12 +1,13 @@
 <script setup lang="ts">
 
-const {user, isAuthenticated, loading} = useAuth()
+const {user, isAuthenticated, loading,isAdmin} = useAuth()
 const {getAllProductsFirstImages} = useImage()
 const firstName = computed(() => user.value?.firstName)
 // console.log('home user id',userId)
 const loading2 = ref(true)
 const items = ref<string[]>([])
 onMounted(async () => {
+  console.log(isAdmin)
   items.value = await getAllProductsFirstImages()
   loading2.value = false
 })
