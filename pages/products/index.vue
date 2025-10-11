@@ -61,12 +61,12 @@ const filters=computed(()=>({
 
 watch([page, filters], async ([newPage, newFilters]) => {
   loading.value = true
-  router.replace({
+  await router.replace({
     query: {
-      page:newPage,
-      category:newFilters.category||undefined,
-      ingredients:newFilters.ingredients.length ? newFilters.ingredients.join(',') : undefined,
-      flavours:newFilters.flavours.length ? newFilters.flavours.join(',') : undefined,
+      page: newPage,
+      category: newFilters.category || undefined,
+      ingredients: newFilters.ingredients.length ? newFilters.ingredients.join(',') : undefined,
+      flavours: newFilters.flavours.length ? newFilters.flavours.join(',') : undefined,
       sortField: sortField.value,
       sortDir: sortDir.value,
     }
@@ -145,7 +145,7 @@ function toggleSortDirection(){
 </script>
 <template>
   <div class="m-10">
-    <div class="mt-4 mb-4 flex items-center gap-2">
+    <div class="mt-4 mb-4 flex items-center gap-2 ml-2">
       <p>Sort:</p>
       <button @click="toggleSortDirection" class="cursor-pointer underline">
         {{ sortDir === 'asc' ? 'Ascending' : 'Descending' }}

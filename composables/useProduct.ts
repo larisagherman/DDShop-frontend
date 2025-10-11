@@ -66,6 +66,7 @@ export const useProduct = () => {
         }
 
     }
+
     const getProductAttributesById = async (id: int) => {
         try {
             console.log("Fetching attributes with id: " + id)
@@ -93,6 +94,19 @@ export const useProduct = () => {
         }
     }
 
+    const createProduct=async(productForm:any)=>{
+        try{
+            console.log("Creating product")
+            const response = await $fetch(`${BASE_URL}/products`, {
+                method:'POST',
+                body:productForm
+            })
+            console.log('Created product successfully')
+        }catch(error){
+            console.log("Error creating product",error.data)
+            throw error.data
+        }
+    }
 
     return {
         products,
@@ -105,5 +119,6 @@ export const useProduct = () => {
         totalPages,totalItems,
         getAllProductAttributes,
         allOfTheProductAttributes,
+        createProduct,
     }
 }

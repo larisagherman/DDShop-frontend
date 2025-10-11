@@ -13,7 +13,7 @@
             <UAvatar icon="i-lucide-twitter" size="3xl" class="text-2xl bg-pink-300"/>
           </NuxtLink>
           <NuxtLink to="https://youtube.com">
-            <UAvatar icon="i-lucide-youtube" size="3xl"  class="text-2xl bg-pink-300 " />
+            <UAvatar icon="i-lucide-youtube" size="3xl"  class="text-2xl bg-pink-300 "  />
           </NuxtLink>
         </div>
     </div>
