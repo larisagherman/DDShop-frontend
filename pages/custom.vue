@@ -1,18 +1,30 @@
-
 <script setup lang="ts">
-const items = [
-  'https://picsum.photos/468/468?random=1',
-  'https://picsum.photos/468/468?random=2',
-  'https://picsum.photos/468/468?random=3',
-  'https://picsum.photos/468/468?random=4',
-  'https://picsum.photos/468/468?random=5',
-  'https://picsum.photos/468/468?random=6'
-]
+import type { DropdownMenuItem } from '@nuxt/ui'
+
+const items = ref<DropdownMenuItem[]>([
+  {
+    label: 'Profile',
+    icon: 'i-lucide-user'
+  },
+  {
+    label: 'Billing',
+    icon: 'i-lucide-credit-card'
+  },
+  {
+    label: 'Settings',
+    icon: 'i-lucide-cog'
+  }
+])
 </script>
 
 <template>
-  <UCarousel v-slot="{ item }" :items="items" :ui="{ item: 'basis-1/3' }">
-    <img :src="item" width="234" height="234" class="rounded-lg">
-  </UCarousel>
-</template>
+  <UDropdownMenu
 
+      :items="items"
+      :ui="{
+      content: 'w-48'
+    }"
+  >
+    <UButton label="Open"  color="neutral" variant="outline" />
+  </UDropdownMenu>
+</template>

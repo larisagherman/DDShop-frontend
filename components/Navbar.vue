@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { NavigationMenuItem } from '@nuxt/ui'
+import type {DropdownMenuItem, NavigationMenuItem} from '@nuxt/ui'
 import { useAuth } from "~/composables/useAuth"
 import { useRoute, useRouter } from 'vue-router'
 
@@ -8,7 +8,7 @@ const hiddenNavbarRoutes = ['/auth/register', '/auth/reset-password', '/auth/log
 const showNavbar = computed(() => !hiddenNavbarRoutes.includes(route.path))
 const router = useRouter()
 
-const { logout, isAuthenticated, loading } = useAuth()
+const { logout, isAuthenticated, loading,isAdmin } = useAuth()
 const { totalItemsInCart } = useCart()
 
 const handleLogout = async () => {
@@ -25,9 +25,11 @@ const rightItems = [
   { label: 'About', to: '/about' },
   { label: 'Contact', to: '/contact' }
 ]
-const adminItems=[
-  {label: 'Admin',to: '/admin'},
-]
+
+const adminItems=ref<DropdownMenuItem[]>([
+  {label: 'Admin',icon:'i-lucide-user-plus',to: '/admin'},
+  {label: 'ManageProducts',icon:'i-lucide-user-plus',to: '/admin/addProducts'}
+])
 const logIn = computed<NavigationMenuItem[]>(() => [
   { label: 'Login', icon: 'i-lucide-log-in', to: '/auth/login' }
 ])
@@ -68,49 +70,83 @@ const mobileMenuOpen = ref(false)
       </NuxtLink>
 
       <!-- RIGHT ITEMS & ICONS -->
-      <div class="flex items-center space-x-6 ml-auto">
-        <div class="hidden md:flex">
-          <UNavigationMenu :items="adminItems" />
-        </div>
-
+      <!-- RIGHT ITEMS & ICONS -->
+      <div class="flex items-center gap-6 ml-auto">
+        <!-- Right navigation links -->
         <div class="hidden md:flex">
           <UNavigationMenu :items="rightItems" />
         </div>
-        <!-- Icons -->
-        <NuxtLink to="/" class="p-1">
-          <UIcon name="i-lucide-search" class="text-pink-600 w-6 h-6" absoluteStrokeWidth="0.5"  />
+
+        <!-- Search icon -->
+        <NuxtLink to="/" class="p-1 flex items-center justify-center">
+          <UIcon name="i-lucide-search" class="text-pink-600 w-6 h-6" />
         </NuxtLink>
 
-        <NuxtLink to="/cart" class="relative p-1">
+        <!-- Cart icon -->
+        <NuxtLink to="/cart" class="relative p-1 flex items-center justify-center">
           <UChip :text="totalItemsInCart" size="3xl">
-            <UIcon name="i-lucide-shopping-cart" class="text-pink-600 w-6 h-6" absoluteStrokeWidth="0.5" />
+            <UIcon name="i-lucide-shopping-cart" class="text-pink-600 w-6 h-6" />
           </UChip>
         </NuxtLink>
 
-        <div v-if="isAuthenticated" class="ml-1 hidden md:block">
+
+
+        <!-- User dropdown -->
+        <div v-if="isAuthenticated" class="flex items-center justify-center">
           <UDropdownMenu :items="items" :ui="{ item: { base: 'cursor-pointer' } }">
-            <UButton icon="i-lucide-user" color="gray-500" class="w-6 h-6 text-pink-600 cursor-pointer " absoluteStrokeWidth="0.5" variant="ghost" size="xl" />
+            <UButton
+                icon="i-lucide-user"
+                color="gray-500"
+                variant="ghost"
+                size="md"
+                class="text-pink-600"
+            />
             <template #item="{ item }">
               <div
                   class="flex items-center px-3 py-2 space-x-2 hover:bg-gray-100 cursor-pointer"
                   @click="handleItemClick(item)"
               >
-                <UIcon :name="item.icon" class="w-4 h-4 text-gray-500"/>
+                <UIcon :name="item.icon" class="w-4 h-4 text-gray-500" />
                 <span class="text-sm text-gray-700">{{ item.label }}</span>
               </div>
             </template>
           </UDropdownMenu>
         </div>
 
+        <!-- Login menu (if not authenticated) -->
         <div v-else class="hidden md:block">
           <UNavigationMenu class="space-x-0" :items="logIn" />
         </div>
 
-        <!-- Mobile hamburger -->
-        <button class="md:hidden p-2" @click="mobileMenuOpen = !mobileMenuOpen">
-          <UIcon :name="mobileMenuOpen ? 'i-lucide-x' : 'i-lucide-menu'" class="w-6 h-6 text-gray-500" />
+        <!-- Mobile menu toggle -->
+        <button class="md:hidden p-2 flex items-center justify-center" @click="mobileMenuOpen = !mobileMenuOpen">
+          <UIcon :name="mobileMenuOpen ? 'i-lucide-x' : 'i-lucide-menu'" class="w-6 h-6 text-pink-600" />
         </button>
+
+        <!-- Admin dropdown -->
+        <div v-if="isAdmin" class="flex items-center justify-center">
+          <UDropdownMenu :items="adminItems" :ui="{ item: { base: 'cursor-pointer' } }">
+            <UButton
+                label="Admin"
+                color="gray-500"
+                variant="ghost"
+                size="xl"
+                class="text-pink-600"
+            />
+            <template #item="{ item }">
+              <div
+                  class="flex items-center px-3 py-2 space-x-2 hover:bg-gray-100 cursor-pointer"
+                  @click="handleItemClick(item)"
+              >
+                <UIcon :name="item.icon" class="w-4 h-4 text-gray-500" />
+                <span class="text-sm text-gray-700">{{ item.label }}</span>
+              </div>
+            </template>
+          </UDropdownMenu>
+        </div>
       </div>
+
+
     </header>
 
     <!-- Mobile dropdown menu -->
