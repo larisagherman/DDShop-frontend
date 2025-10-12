@@ -215,12 +215,15 @@ const quantity = ref(1)
                   </button>
                 </div>
 
-                <UButton @click="handleAddToCart(product)" class="w-full cursor-pointer text-2xl">
+                <UButton @click="handleAddToCart(product)" class="w-full cursor-pointer text-md" size="lg">
                   Add to Cart
                 </UButton>
               </div>
 
-
+              <div>
+                <UButton>Delete Product</UButton>
+                <UButton> Update Product</UButton>
+              </div>
             </div>
           </div>
 

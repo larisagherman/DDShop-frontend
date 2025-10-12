@@ -4,5 +4,7 @@ definePageMeta({
 })
 </script>
 <template>
-  <h1>this is admin</h1>
+  <div class="h-screen">
+    <h1 class="text-center text-2xl p-20">This is Admin Page</h1>
+  </div>
 </template>

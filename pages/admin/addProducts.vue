@@ -50,7 +50,6 @@ const addProduct = async () => {
     successMessage.value = 'Product created successfully!'
     errorMessage.value = ''
 
-    // 2️⃣ Reset form
     formProduct.name = ''
     formProduct.description = ''
     formProduct.price = 0
