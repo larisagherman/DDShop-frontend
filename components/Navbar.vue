@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import type {DropdownMenuItem, NavigationMenuItem} from '@nuxt/ui'
-import { useAuth } from "~/composables/useAuth"
-import { useRoute, useRouter } from 'vue-router'
+import {useAuth} from "~/composables/useAuth"
+import {useRoute, useRouter} from 'vue-router'
 
 const route = useRoute()
 const hiddenNavbarRoutes = ['/auth/register', '/auth/reset-password', '/auth/login', '/auth/forgot-password', '/checkout/shipping', '/checkout/billing', '/checkout/confirmation']
 const showNavbar = computed(() => !hiddenNavbarRoutes.includes(route.path))
 const router = useRouter()
 
-const { logout, isAuthenticated, loading,isAdmin } = useAuth()
-const { totalItemsInCart } = useCart()
+const {logout, isAuthenticated, loading, isAdmin} = useAuth()
+const {totalItemsInCart} = useCart()
 
 const handleLogout = async () => {
   await logout()
@@ -17,27 +17,59 @@ const handleLogout = async () => {
 }
 
 const leftItems = [
-  { label: 'Shop Desserts', to: '/products' },
-  { label: 'Cookies', to: '/products?category=cookies' },
-  { label: 'Cakes', to: '/products?category=cakes' },
+  {label: 'Shop Desserts', to: '/products'},
+  {label: 'Cookies', to: '/products?category=cookies'},
+  {label: 'Cakes', to: '/products?category=cakes'},
 ]
 const rightItems = [
-  { label: 'About', to: '/about' },
-  { label: 'Contact', to: '/contact' }
+  {label: 'About', to: '/about'},
+  {label: 'Contact', to: '/contact'}
 ]
 
-const adminItems=ref<DropdownMenuItem[]>([
-  {label: 'Admin',icon:'i-lucide-user-plus',to: '/admin'},
-  {label: 'ManageProducts',icon:'i-lucide-user-plus',to: '/admin/addProducts'}
+const adminItems = ref<DropdownMenuItem[][]>([
+  [
+    {
+      label: 'Dashboard',
+      icon: 'i-lucide-layout-dashboard',
+      to: '/admin'
+    },
+    {
+      label: 'Manage Products',
+      icon: 'i-lucide-package',
+      to: '/admin/products',
+      children: [
+        [
+          {
+            label: 'Add Product',
+            icon: 'i-lucide-plus-circle',
+            to: '/admin/products/add-product'
+          },
+          {
+            label: 'Update Product',
+            icon: 'i-lucide-pencil',
+            to: '/admin/products/update-product/'
+          }
+        ]
+      ]
+    },
+  ],
+  [
+    {
+      label: 'Logout',
+      icon: 'i-lucide-log-out',
+      kbds: ['shift', 'meta', 'q']
+    }
+  ]
 ])
+
 const logIn = computed<NavigationMenuItem[]>(() => [
-  { label: 'Login', icon: 'i-lucide-log-in', to: '/auth/login' }
+  {label: 'Login', icon: 'i-lucide-log-in', to: '/auth/login'}
 ])
 
 const items = ref<DropdownMenuItem[]>([
-  { label: 'Profile', icon: 'i-lucide-user', to: '/user' },
-  { label: 'Order History', icon: 'i-lucide-shopping-bag', to: '/user/orderHistory' },
-  { label: 'Logout', icon: 'i-lucide-log-out' }
+  {label: 'Profile', icon: 'i-lucide-user', to: '/user'},
+  {label: 'Order History', icon: 'i-lucide-shopping-bag', to: '/user/orderHistory'},
+  {label: 'Logout', icon: 'i-lucide-log-out'}
 ])
 
 const handleItemClick = async (item: DropdownMenuItem) => {
@@ -58,7 +90,7 @@ const mobileMenuOpen = ref(false)
     >
       <!-- LEFT ITEMS (desktop only) -->
       <div class="hidden md:flex items-center space-x-6">
-        <UNavigationMenu :items="leftItems" />
+        <UNavigationMenu :items="leftItems"/>
       </div>
 
       <!-- LOGO -->
@@ -66,7 +98,7 @@ const mobileMenuOpen = ref(false)
           to="/"
           class="flex-shrink-0 md:absolute md:left-1/2 md:transform md:-translate-x-1/2"
       >
-        <img src="/logo.png" alt="Logo" class="h-15 w-auto" />
+        <img src="/logo.png" alt="Logo" class="h-15 w-auto"/>
       </NuxtLink>
 
       <!-- RIGHT ITEMS & ICONS -->
@@ -74,53 +106,55 @@ const mobileMenuOpen = ref(false)
       <div class="flex items-center gap-6 ml-auto">
         <!-- Right navigation links -->
         <div class="hidden md:flex">
-          <UNavigationMenu :items="rightItems" />
+          <UNavigationMenu :items="rightItems"/>
         </div>
 
         <!-- Search icon -->
         <NuxtLink to="/" class="p-1 flex items-center justify-center">
-          <UIcon name="i-lucide-search" class="text-pink-600 w-6 h-6" />
+          <UIcon name="i-lucide-search" class="text-pink-600 w-6 h-6"/>
         </NuxtLink>
 
         <!-- Cart icon -->
         <NuxtLink to="/cart" class="relative p-1 flex items-center justify-center">
           <UChip :text="totalItemsInCart" size="3xl">
-            <UIcon name="i-lucide-shopping-cart" class="text-pink-600 w-6 h-6" />
+            <UIcon name="i-lucide-shopping-cart" class="text-pink-600 w-6 h-6"/>
           </UChip>
         </NuxtLink>
 
 
+        <div v-if="!isAdmin">
+          <!-- User dropdown -->
+          <div v-if="isAuthenticated" class="flex items-center justify-center">
+            <UDropdownMenu :items="items" :ui="{ item: { base: 'cursor-pointer' } }">
+              <UButton
+                  icon="i-lucide-user"
+                  color="gray-500"
+                  variant="ghost"
+                  size="xl"
+                  class="text-pink-600"
+              />
+              <template #item="{ item }">
+                <div
+                    class="flex items-center px-3 py-2 space-x-2 hover:bg-gray-100 cursor-pointer"
+                    @click="handleItemClick(item)"
+                >
+                  <UIcon :name="item.icon" class="w-4 h-4 text-gray-500"/>
+                  <span class="text-sm text-gray-700">{{ item.label }}</span>
+                </div>
+              </template>
+            </UDropdownMenu>
+          </div>
 
-        <!-- User dropdown -->
-        <div v-if="isAuthenticated" class="flex items-center justify-center">
-          <UDropdownMenu :items="items" :ui="{ item: { base: 'cursor-pointer' } }">
-            <UButton
-                icon="i-lucide-user"
-                color="gray-500"
-                variant="ghost"
-                size="md"
-                class="text-pink-600"
-            />
-            <template #item="{ item }">
-              <div
-                  class="flex items-center px-3 py-2 space-x-2 hover:bg-gray-100 cursor-pointer"
-                  @click="handleItemClick(item)"
-              >
-                <UIcon :name="item.icon" class="w-4 h-4 text-gray-500" />
-                <span class="text-sm text-gray-700">{{ item.label }}</span>
-              </div>
-            </template>
-          </UDropdownMenu>
+          <!-- Login menu (if not authenticated) -->
+          <div v-else class="hidden md:block">
+            <UNavigationMenu class="space-x-0" :items="logIn"/>
+          </div>
         </div>
 
-        <!-- Login menu (if not authenticated) -->
-        <div v-else class="hidden md:block">
-          <UNavigationMenu class="space-x-0" :items="logIn" />
-        </div>
 
         <!-- Mobile menu toggle -->
         <button class="md:hidden p-2 flex items-center justify-center" @click="mobileMenuOpen = !mobileMenuOpen">
-          <UIcon :name="mobileMenuOpen ? 'i-lucide-x' : 'i-lucide-menu'" class="w-6 h-6 text-pink-600" />
+          <UIcon :name="mobileMenuOpen ? 'i-lucide-x' : 'i-lucide-menu'" class="w-6 h-6 text-pink-600"/>
         </button>
 
         <!-- Admin dropdown -->
@@ -128,6 +162,7 @@ const mobileMenuOpen = ref(false)
           <UDropdownMenu :items="adminItems" :ui="{ item: { base: 'cursor-pointer' } }">
             <UButton
                 label="Admin"
+                icon="i-lucide-user-cog"
                 color="gray-500"
                 variant="ghost"
                 size="xl"
@@ -138,7 +173,7 @@ const mobileMenuOpen = ref(false)
                   class="flex items-center px-3 py-2 space-x-2 hover:bg-gray-100 cursor-pointer"
                   @click="handleItemClick(item)"
               >
-                <UIcon :name="item.icon" class="w-4 h-4 text-gray-500" />
+                <UIcon :name="item.icon" class="w-4 h-4 text-gray-500"/>
                 <span class="text-sm text-gray-700">{{ item.label }}</span>
               </div>
             </template>
@@ -172,16 +207,16 @@ const mobileMenuOpen = ref(false)
         </div>
 
         <!-- Account -->
-        <div>
+        <div v-if="!isAdmin">
           <p class="text-gray-500 uppercase text-xs font-bold mb-2 text-center ml-100">Account</p>
-          <div v-if="isAuthenticated" class="flex flex-col space-y-3 items-end mr-8">
+          <div v-if="isAuthenticated " class="flex flex-col space-y-3 items-end mr-8">
             <button
                 v-for="item in items"
                 :key="item.label"
                 @click="handleItemClick(item)"
                 class="flex items-center text-gray-700 hover:text-gray-900"
             >
-              <UIcon :name="item.icon" class="w-4 h-4 mr-2" />
+              <UIcon :name="item.icon" class="w-4 h-4 mr-2"/>
               {{ item.label }}
             </button>
           </div>

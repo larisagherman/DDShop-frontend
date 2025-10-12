@@ -43,13 +43,19 @@ const removeImage=(index:number)=>{
 }
 const successMessage = ref('')
 const errorMessage = ref('')
+const toast=useToast()
 
 const addProduct = async () => {
   try {
     await createProduct(formProduct)
-    successMessage.value = 'Product created successfully!'
-    errorMessage.value = ''
 
+    toast.add({
+      title: 'Product created successfully!',
+      description: `${formProduct.name} was added to the catalog.`,
+      color: 'success',
+      icon: 'i-heroicons-check-circle',
+      timeout: 4000, // disappears after 4s
+    })
     formProduct.name = ''
     formProduct.description = ''
     formProduct.price = 0
@@ -59,24 +65,23 @@ const addProduct = async () => {
     formProduct.imageUrls = [{ imageUrl: '' }]
     formProduct.productAttributes = [{ name: '', value: '' }]
 
-    if (successMessage.value) {
-      setTimeout(() => {
-        successMessage.value = ''
-      }, 5000) // hides after 5 seconds
-    }
+
 
 
   } catch (err) {
-    errorMessage.value = 'Failed to create product. Please try again.'
-    successMessage.value = ''  }
+    toast.add({
+      title: 'Failed to create product',
+      description: 'Please try again or check your input.',
+      color: 'error',
+      icon: 'i-heroicons-exclamation-triangle',
+      timeout: 5000,
+    })
+  }
 }
 </script>
 
 <template>
-  <div class="mb-4 w-full max-w-3xl mx-auto">
-    <p v-if="successMessage" class="text-green-600 font-medium">{{ successMessage }}</p>
-    <p v-if="errorMessage" class="text-red-600 font-medium">{{ errorMessage }}</p>
-  </div>
+
   <div class="max-w-3xl mx-auto p-8 flex flex-col items-center justify-center">
     <UForm :state=formProduct @submit="addProduct" class="space-y-6 bg-pink-50 pl-20 pr-20 pt-15 pb-20 rounded-2xl shadow">
       <h1 class="text-center text-2xl font-semibold mb-6 text-pink-500">Add Product:</h1>

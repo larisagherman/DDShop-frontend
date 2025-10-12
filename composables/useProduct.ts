@@ -107,6 +107,30 @@ export const useProduct = () => {
             throw error.data
         }
     }
+    const deleteProduct=async (productId:number)=>{
+        try{
+            console.log("Deleting product")
+            const response = await $fetch(`${BASE_URL}/products/${productId}`, {
+                method:"DELETE",
+                body:productId
+            })
+            console.log('Deleted product')
+        }catch(error){
+            console.log("Error deleting product",error.data)
+        }
+    }
+    const updateProduct=async(productId:number,updateProductForm)=>{
+        try{
+            console.log("Updating product")
+            const response = await $fetch(`${BASE_URL}/products/${productId}`, {
+                method:"PUT",
+                body:updateProductForm
+            })
+            console.log('Updated product')
+        }catch(error){
+            console.log("Error updating product",error.data)
+        }
+    }
 
     return {
         products,
@@ -120,5 +144,7 @@ export const useProduct = () => {
         getAllProductAttributes,
         allOfTheProductAttributes,
         createProduct,
+        deleteProduct,
+        updateProduct,
     }
 }

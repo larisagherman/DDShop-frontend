@@ -2,20 +2,18 @@
 const route = useRoute()
 
 const {product, getProductById} = useProduct()
-const loading=ref(true)
+const loading = ref(true)
+const {isAdmin} = useAuth()
+const {deleteProduct} = useProduct()
+const id = Number(route.params.id)
 
-onMounted(async() => {
-  const id = Number(route.params.id)
-  loading.value=true
+onMounted(async () => {
+  loading.value = true
   await getProductById(id)
-  loading.value=false
+  loading.value = false
 })
 
 const router = useRouter()
-
-function goBack() {
-  router.back()
-}
 
 const breadcrumbs = ref<BreadcrumbItem[]>([
   {
@@ -82,14 +80,27 @@ function handleAddToCart(product) {
   console.log('Adding to cart', product)
   addToCart(product.id, product.name, quantity, pricePerPiece, totalPricePerEntry)
 }
+
 const quantity = ref(1)
+
+const handleDeleteProduct = async () => {
+  try{
+    await deleteProduct(id)
+    alert('Product deleted successfully!')
+    await router.push('/products/')
+
+  }catch(e){
+    alert('Error deleting product. Please try again.')
+  }
+}
+
 
 </script>
 
-<template >
+<template>
   <div class="h-screen">
     <div class="p-4 mb-10 ">
-      <UBreadcrumb  :items="breadcrumbs" />
+      <UBreadcrumb :items="breadcrumbs"/>
     </div>
     <div class="max-w-6xl mx-auto">
       <!-- Loading skeleton -->
@@ -220,9 +231,10 @@ const quantity = ref(1)
                 </UButton>
               </div>
 
-              <div>
-                <UButton>Delete Product</UButton>
-                <UButton> Update Product</UButton>
+              <div v-if="isAdmin" class="flex gap-8 mt-6">
+                <UButton @click="handleDeleteProduct" class="w-full cursor-pointer text-md" size="lg">Delete Product</UButton>
+                <UButton   @click="router.push(`/admin/products/update-product/${product.id}`)"
+                           class="w-full cursor-pointer text-md" size="lg"> Update Product</UButton>
               </div>
             </div>
           </div>
