@@ -39,7 +39,6 @@ onMounted(() => {
       await getCategories()
       await getProductById(id)
       await getProductAttributesById(id)
-
       if (product.value) {
         const p = product.value
         formProduct.name = p.name

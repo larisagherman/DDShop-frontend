@@ -25,7 +25,7 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         public: {
-            apiBase: process.env.API_BASE_URL || 'http://localhost:8080' //|| 'https://ddshop-backend.onrender.com'
+            apiBase: process.env.API_BASE_URL ||  'https://ddshop-backend.onrender.com'  //|| 'http://localhost:8080'
         }
     },
 

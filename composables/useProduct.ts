@@ -58,8 +58,14 @@ export const useProduct = () => {
             const response = await $fetch(`${BASE_URL}/products/${id}`, {
                 method: 'GET',
             })
-            product.value = response
-            console.log('Product by id fetched')
+            console.log('Response type:', typeof response)
+            console.log('Raw response:', response)
+            console.log('Response keys:', Object.keys(response || {}))
+            product.value = response.data ? response.data : response
+            console.log('Full API response:', response)
+
+            console.log('Product attributes:', product.value.productAttributes)
+            console.log('Image URLs:', product.value.imageUrls)
         } catch (error) {
             console.log("Error fetching product by id: ", error.data)
             throw error.data || 'Fetching product by id failed'
@@ -74,7 +80,7 @@ export const useProduct = () => {
                 method:'GET',
             })
             productAttributes.value = response
-            console.log('Product attributes fetched: ')
+            console.log('Product attributes fetched: ',response)
         }catch(error) {
             console.log("Error fetching attributes failed: ", error.data)
             throw error.data || 'Fetching attributes failed'
