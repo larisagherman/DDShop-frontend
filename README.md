@@ -1,76 +1,46 @@
-# Nuxt Minimal Starter
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+<a href="https://ddshop-frontend.onrender.com/">🍰 Dessert E-Commerce Frontend</a>
 
-## Setup
+<img width="1552" height="931" alt="Screenshot 2025-10-14 at 10 14 57 AM" src="https://github.com/user-attachments/assets/d38bd405-ae29-4790-9730-6caeec842bda" />
 
-Make sure to install dependencies:
 
-```bash
-# npm
-npm install
+A modern and responsive dessert **e-commerce web app** built with Nuxt.js and Tailwind CSS, allowing users to browse desserts, add them to a cart, and place orders securely.
+This repository contains the frontend code — the user interface of the application.
 
-# pnpm
-pnpm install
+##🚀 Features
 
-# yarn
-yarn install
+🧁 Browse desserts with images, names, and prices
 
-# bun
-bun install
-```
+🛒 Add items to cart, update quantities, and remove products
 
-## Development Server
+💳 Multi-step checkout (Billing → Shipping → Confirmation)
 
-Start the development server on `http://localhost:3000`:
+📧 Email confirmation after successful order
 
-```bash
-# npm
-npm run dev
+🔐 JWT-based authentication (login/register)
 
-# pnpm
-pnpm dev
+👩‍💼 Admin functionality: add, update, or delete products
 
-# yarn
-yarn dev
+💬 Contact form for sending messages
 
-# bun
-bun run dev
-```
+📱 Fully responsive UI with Tailwind CSS
 
-## Production
+##🧩 Tech Stack
+Category	Technology: Framework	Nuxt.js 3
+Styling:	Tailwind CSS
+Routing:	Nuxt Pages System
+Backend:	Spring Boot 
 
-Build the application for production:
+##🧠 Project Structure
+.
+├── assets/              # Images, fonts, CSS, and other static assets
+├── components/          # Reusable UI elements (footer,navbar,cartDisplay, checkout)
+├── composables/         # Reusable logic functions (useCart(), useAuth(), ...)
+├── layouts/             # Global page layouts (checkout )
+├── middleware/          # Route guards (auth, admin, order success)
+├── pages/               # Nuxt pages (Home, Products, Cart, Checkout, About, Contact,...)
+├── public/              # Public/static files (favicon, images, ...)
+├── store/               # State management (cart)
+└── .env                 # Environment variables (API base URL, keys)
 
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
-# DDShop-frontend
+---
