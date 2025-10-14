@@ -6,30 +6,25 @@
 
 A modern and responsive dessert **e-commerce web app** built with Nuxt.js and Tailwind CSS, allowing users to browse desserts, add them to a cart, and place orders securely.
 This repository contains the frontend code — the user interface of the application.
+---
 
 ##🚀 Features
-
 🧁 Browse desserts with images, names, and prices
-
 🛒 Add items to cart, update quantities, and remove products
-
 💳 Multi-step checkout (Billing → Shipping → Confirmation)
-
 📧 Email confirmation after successful order
-
 🔐 JWT-based authentication (login/register)
-
 👩‍💼 Admin functionality: add, update, or delete products
-
 💬 Contact form for sending messages
-
 📱 Fully responsive UI with Tailwind CSS
+---
 
 ##🧩 Tech Stack
 Category	Technology: Framework	Nuxt.js 3
 Styling:	Tailwind CSS
 Routing:	Nuxt Pages System
 Backend:	Spring Boot 
+---
 
 ##🧠 Project Structure
 .
@@ -42,5 +37,4 @@ Backend:	Spring Boot
 ├── public/              # Public/static files (favicon, images, ...)
 ├── store/               # State management (cart)
 └── .env                 # Environment variables (API base URL, keys)
-
 ---
