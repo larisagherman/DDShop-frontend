@@ -17,6 +17,7 @@ const defaultFormState = {
 const submitFormState = async () => {
   try {
     await sendMessage(formState)
+    alert("Thank you! Your message has been sent! ")
     Object.assign(formState, defaultFormState)
   } catch (error) {
     error.value = error
