@@ -98,7 +98,7 @@ const handleDeleteProduct = async () => {
 </script>
 
 <template>
-  <div class="h-screen">
+  <div>
     <div class="p-4 mb-10 ">
       <UBreadcrumb :items="breadcrumbs"/>
     </div>
