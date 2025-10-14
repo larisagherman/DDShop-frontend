@@ -16,6 +16,7 @@ const defaultFormState = {
 }
 const submitFormState = async () => {
   try {
+    console.log('Submitting...')
     await sendMessage(formState)
     alert("Thank you! Your message has been sent! ")
     Object.assign(formState, defaultFormState)
