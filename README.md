@@ -1,6 +1,6 @@
 <a href="https://ddshop-frontend.onrender.com/">🍰 Dessert E-Commerce Frontend</a>
 
-<img width="1552" height="931" alt="Screenshot 2025-10-14 at 10 14 57 AM" src="https://github.com/user-attachments/assets/d38bd405-ae29-4790-9730-6caeec842bda" />
+<img width="1552" height="931" alt="Screenshot 2025-10-16 at 9 13 02 AM" src="https://github.com/user-attachments/assets/4615f9af-1418-4bee-afb0-40332a71ae06" />
 
 A modern and responsive dessert e-commerce web app built with Nuxt.js and Tailwind CSS, allowing users to browse desserts, add them to a cart, and place orders securely.
 This repository contains the frontend code — the user interface of the application.
