@@ -52,6 +52,50 @@ const adminItems = ref<DropdownMenuItem[][]>([
         ]
       ]
     },
+    {
+      label: 'Manage Orders',
+      icon: 'i-lucide-shopping-bag',
+      children: [
+        [
+          {
+            label: 'View Orders',
+            icon: 'i-lucide-eye',
+            to: '/admin/orders/view-orders'
+          },
+          {
+            label: 'Update Orders',
+            icon: 'i-lucide-plus',
+            to: '/admin/orders/update-order'
+          },
+          {
+            label: 'Delete Order',
+            icon: 'i-lucide-trash',
+            to: '/admin/orders/delete-order'
+          },
+
+        ]
+      ]
+    },
+    {
+      label: 'Manage Users',
+      icon: 'i-lucide-user',
+      children: [
+        [
+          {
+            label: 'View Users',
+            icon: 'i-lucide-eye',
+            to: '/admin/users/view-users'
+          },
+          {
+            label: 'Delete User',
+            icon: 'i-lucide-trash',
+            to: '/admin/users/delete-user'
+          },
+
+        ]
+      ]
+    }
+
   ],
   [
     {

@@ -3,7 +3,7 @@ const route = useRoute()
 
 const {product, getProductById} = useProduct()
 const loading = ref(true)
-const {isAdmin} = useAuth()
+const {isAdmin,isAuthenticated,user} = useAuth()
 const {deleteProduct} = useProduct()
 const id = Number(route.params.id)
 
@@ -73,6 +73,10 @@ function select(index: number) {
 const {addToCart} = useCart()
 
 function handleAddToCart(product) {
+  if(!user){
+    alert("Please login or register to add products to your cart.");
+    return;
+  }
   const quantity = 1
   const pricePerPiece = product.price
   const totalPricePerEntry = pricePerPiece * quantity
@@ -98,7 +102,7 @@ const handleDeleteProduct = async () => {
 </script>
 
 <template>
-  <div>
+  <div class="mb-30">
     <div class="p-4 mb-10 ">
       <UBreadcrumb :items="breadcrumbs"/>
     </div>
