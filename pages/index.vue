@@ -23,7 +23,7 @@ onMounted(async () => {
             {{ firstName }}! <br>Fancy a sweet treat?</h1>
         </div>
         <div v-else>
-          <h1 class="text-center  font-bold text-5xl text-white drop-shadow-lg">Fancy a sweet treat?</h1>
+          <h1 class="text-center  font-bold text-5xl text-white drop-shadow-lg mt-30">Fancy a sweet treat?</h1>
         </div>
         <NuxtLink to="/products">
           <UButton

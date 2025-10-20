@@ -53,7 +53,9 @@ watch(useSameAddress, (newVal) => {
 <template>
   <div class="flex items-center justify-center w-full">
     <div class="flex flex-col items-center gap-2">
-      <img src="/logo.png" alt="Logo" class="h-30 w-auto mb-2"/>
+      <NuxtLink to="/">
+        <img src="/logo.png" alt="Logo" class="h-30 w-auto mb-2"/>
+      </NuxtLink>
       <p class="text-center text-lg text-gray-700 italic">Join the sweet life — discover your favorite desserts,<br> save your cravings, and treat yourself on your terms.</p>
       <UForm :state="formState" class="flex flex-col gap-4 " @submit.prevent="submitRegister">
         <h2 class="text-center font-semibold text-3xl p-4">REGISTER</h2>

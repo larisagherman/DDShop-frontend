@@ -14,9 +14,9 @@ function checkout() {
 
 </script>
 <template>
-  <div class="max-w-4xl mx-auto p-4">
+  <div class="max-w-4xl mx-auto p-4 mb-20">
     <!-- 💡 Check if cart is loaded -->
-    <div v-if="!cart">
+    <div v-if="!cart" class="mb-35">
       <p class="text-center text-gray-500 mt-10">Loading cart...</p>
     </div>
 

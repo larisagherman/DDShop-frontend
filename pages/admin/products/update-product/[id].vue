@@ -80,7 +80,7 @@ const submitUpdate = async () => {
       icon: 'i-heroicons-check-circle',
     })
 
-    router.push('/admin/products') // go back to products list
+    await router.push('/admin/products') // go back to products list
   } catch (err) {
     toast.add({
       title: 'Update failed',

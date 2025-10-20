@@ -9,7 +9,7 @@ import {useAuth} from '~/composables/useAuth'
 import {useCheckoutStore} from '~/stores/useCheckoutStore'
 
 const {userId} = useAuth()
-const {cart, getCartByUserId, checkout,disableCart,createCart} = useCart()
+const {cart, getCartByUserId, checkout, disableCart, createCart} = useCart()
 
 onMounted(() => {
   if (userId.value) {
@@ -18,22 +18,25 @@ onMounted(() => {
 })
 const checkoutStore = useCheckoutStore()
 const router = useRouter()
-async function placeOrder() {
-  const isSubmitting = ref(false)
+const isSubmitting = ref(false)
 
+async function placeOrder() {
+  isSubmitting.value = true
   try {
     const orderForm = {
       userId: userId.value,
       cartId: cart.value.id,
       paymentType: checkoutStore.formState.paymentType,
-      deliveryAddress: { ...checkoutStore.formState.deliveryAddress },
-      invoiceAddress: { ...checkoutStore.formState.billingAddress },
+      deliveryAddress: {...checkoutStore.formState.deliveryAddress},
+      invoiceAddress: {...checkoutStore.formState.billingAddress},
       totalPrice: cart.value.totalPrice,
       orderDate: new Date().toISOString()
     }
     await checkout(orderForm)
     await disableCart(cart.value.id)
     await createCart(userId.value)
+    await getCartByUserId(userId.value)
+
     sessionStorage.setItem('orderSuccess', 'true')
 
     await router.push('/checkout/success')
@@ -83,7 +86,7 @@ async function placeOrder() {
 
       <!-- Confirm Button -->
       <div class="flex justify-center mt-8">
-        <UButton class="text-base py-3 px-6" @click="placeOrder" :loading="isSubmitting">ORDER NOW</UButton>
+        <UButton class="text-base py-3 px-6" @click="placeOrder" :disabled="isSubmitting">ORDER NOW</UButton>
       </div>
     </div>
   </div>

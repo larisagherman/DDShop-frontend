@@ -116,7 +116,7 @@ export const useProduct = () => {
     const deleteProduct=async (productId:number)=>{
         try{
             console.log("Deleting product")
-            const response = await $fetch(`${BASE_URL}/products/${productId}`, {
+            await $fetch(`${BASE_URL}/products/${productId}`, {
                 method:"DELETE",
                 body:productId
             })

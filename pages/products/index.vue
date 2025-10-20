@@ -3,7 +3,7 @@
 const {products,getProductsByPage,totalPages,totalItems,getAllProductAttributes,allOfTheProductAttributes} = useProduct()
 const {cart, addToCart, getCartByUserId} = useCart()
 const {categories, getCategories} = useCategory()
-const {userId} = useAuth()
+const {userId,isAuthenticated,user} = useAuth()
 
 
 const route = useRoute()
@@ -123,6 +123,11 @@ watch(
 
 
 function handleAddToCart(product) {
+  if(!user){
+    alert("Please login or register to add products to your cart.");
+    return;
+  }
+
   const quantity = 1
   const pricePerPiece = product.price
   const totalPricePerEntry = pricePerPiece * quantity
