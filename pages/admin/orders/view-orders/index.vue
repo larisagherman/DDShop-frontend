@@ -11,9 +11,7 @@ const { allOrders, getAllOrders,deleteOrder } = userOrder()
 onMounted(() => {
   getAllOrders()
 })
-const handleDelete=async()=>{
   try{
-    await deleteOrder()
     alert('Order was deleted!')
     await getAllOrders()
   }
@@ -88,7 +86,6 @@ const handleDelete=async()=>{
               Update
             </UButton>
             <UButton
-                @click="handleDelete"
                 color="red"
                 variant="soft"
                 size="sm"

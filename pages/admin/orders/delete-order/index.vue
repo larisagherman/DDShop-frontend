@@ -8,4 +8,3 @@ definePageMeta({
     <h1 class="text-center text-xl p-20">Choose a order to delete</h1>
   </div>
 </template>
-emplate>
