@@ -17,7 +17,7 @@ This repository contains the frontend code — the user interface of the applica
 
 🔐 JWT Authentication – Secure login/register system
 
-👩‍💼 Admin Functionality – Add, update, or delete products
+👩‍💼 Admin Functionality – Add, update, or delete products, orders, users
 
 💬 Contact Form – Users can send messages to the admin
 
